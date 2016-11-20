@@ -1,3 +1,3 @@
 #YuXiao Blog
 
-###[View Live Hux Blog &rarr;](https://yuxiaoma.github.io)
+###[View Live YuXiao Blog &rarr;](https://yuxiaoma.github.io)
