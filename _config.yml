@@ -1,23 +1,22 @@
 # Site settings
-title: YuXiao Blog
-SEOTitle: 马宇骁的博客 | YuXiao Blog
-header-img: img/home-bg.jpg
-email: huxpro@gmail.com
+title: Yux Blog
+SEOTitle: 马宇骁的博客 | Yux Blog
+header-img: img/about-header.jpg
+email: ma.yuxiao1003@gmail.com
 description: "关于前端与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
 keyword: "黄玄, Hux黄玄, Hux, 鬼栈, huxpro, @huxpro, 黄玄的博客, Hux Blog, 博客, 个人网站, 互联网, 前端, 设计, 产品, 肖玉, Lynn, 肖玉的男朋友"
-url: "https://huangxuan.me"              # your host, for absolute URL
+url: "yuxiaoma.com"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
-#twitter_username:  huxpro
-facebook_username:  huxpro
-# linkedin_username:  firstname-lastname-idxxxx
+weibo_username:     1800179555
+#zhihu_username:     xiao-ma-ma-25
+github_username:    yuxiaoma
+facebook_username:  michael.ma.5099
+linkedin_username:  yuxiao-ma-98004025
 
 
 
@@ -51,9 +50,9 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username: huxblog
+#duoshuo_username: yuxiaoma
 # Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+#duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
 
 
@@ -63,15 +62,15 @@ duoshuo_share: true                     # set to false if you want to use Commen
 # ba_track_id: [your track id]
 
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_track_id: 'UA-47551435-1'            # Format: UA-xxxxxx-xx
+ga_domain: yuxiaoma.com
 
 
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "写写代码，做做设计，<br>离开世界之前，一切都是过程"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-about-description: "写写代码，发发闲呆，<br>不为无益之事，何以遣有涯之生"
+sidebar-avatar: /img/avatar-yux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -88,39 +87,12 @@ service-worker: true
 
 
 # Friends
-friends: [
-    {
-        title: "Su",
-        href: "http://su.gallery/"
-    },{
-        title: "乱序",
-        href: "http://mida.re/"
-    },{
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
-    },{
-        title: "天镶的博客",
-        href: "http://lingyu.wang/"
-    },{
-        title: "Luke 的自留地",
-        href: "http://hmqk1995.github.io"
-    },{
-        title: "Ebn's Blog",
-        href: "http://ebnbin.com/"
-    },{
-        title: "SmdCn's Blog",
-        href: "http://blog.smdcn.net"
-    },{
-        title: "解旻的博客",
-        href: "http://xieminis.me/"
-    },{
-        title: "DHong Say",
-        href: "http://dhong.co"
-    },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
-    },{
-        title: "前端神盾局",
-        href: "http://wepiaofei.github.io/blog/"
-    }
-]
+# friends: [
+#     {
+#         title: "Su",
+#         href: "http://su.gallery/"
+#     },{
+#         title: "乱序",
+#         href: "http://mida.re/"
+#     }
+# ]

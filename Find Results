@@ -1,0 +1,10 @@
+Searching 145 files for "avatar-hux.jpg" (case sensitive)
+
+/Users/yuxiaoma/Documents/yuxiaoma.github.io/README.zh.md:
+  124  sidebar: true  #添加侧边栏
+  125  sidebar-about-description: "简单的描述一下你自己"
+  126: sidebar-avatar: /img/avatar-yux.jpg     #你的大头贴，请使用绝对地址.
+  127  ```
+  128  
+
+1 match in 1 file

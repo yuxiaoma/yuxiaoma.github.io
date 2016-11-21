@@ -1,34 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Yux Blog</title>
-    <description>关于前端与设计、黑客与画家 | 黄玄，Web &amp; Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 20 Nov 2016 19:43:09 -0800</pubDate>
-    <lastBuildDate>Sun, 20 Nov 2016 19:43:09 -0800</lastBuildDate>
-    <generator>Jekyll v3.3.1</generator>
-    
-      <item>
-        <title>第一篇搞得我还有点紧张</title>
-        <description>&lt;p&gt;接下来将会对markdown语法中的特效和相应的符号逐个给大家介绍，我也是今天才现学现卖，有哪解释的不正确还求大大们纠正。&lt;/p&gt;
+---
+layout:     post
+title:      "第一篇搞得我还有点紧张"
+subtitle:   "博客刚开处女篇就先带大家熟悉一下.markdown的语法吧"
+date:       2016-11-20 12:00:00
+author:     "Yux"
+header-img: "img/post-bg-re-vs-ng2.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - 处女篇
+    - markdown
+---
 
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt;一般用于文中的indentation，斜体。非常醒目，一般用来添加文外注释或者文章出处。 文章开头的&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt;一般用来注明文章出处的，原创的时候是要写个啥呢&lt;/p&gt;
-&lt;/blockquote&gt;
+接下来将会对markdown语法中的特效和相应的符号逐个给大家介绍，我也是今天才现学现卖，有哪解释的不正确还求大大们纠正。
 
-&lt;p&gt;&lt;a href=&quot;http://yuxiaoma.com/2016/11/20/very-first-post/&quot;&gt;链接&lt;/a&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[链接名](http://example.com)&lt;/code&gt;用来实现传说中的文中链接。突然想起有一次CS456 Computer Networks教授讲的一个笑话“你们说爱因斯坦看到一段蓝色的文字，他会知道那玩意可以点进去么？。。” 上完那节课没多久我就感冒了。&lt;/p&gt;
+> `>`一般用于文中的indentation，斜体。非常醒目，一般用来添加文外注释或者文章出处。 文章开头的`>`一般用来注明文章出处的，原创的时候是要写个啥呢
 
-&lt;p&gt;&lt;strong&gt;粗体&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;**粗体**&lt;/code&gt;当然说的是粗体字体，你以为是什么&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*MRPl_SNuRGJchb6eOAnkSA.jpeg&quot; alt=&quot;&quot; /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;![](插图.jpg)&lt;/code&gt;用于非常粗暴的插图，记得链接使用绝对链接，然后素质高童鞋的一般会标注下图片来源。&lt;/p&gt;
+[链接](http://yuxiaoma.com/2016/11/20/very-first-post/) `[链接名](http://example.com)`用来实现传说中的文中链接。突然想起有一次CS456 Computer Networks教授讲的一个笑话“你们说爱因斯坦看到一段蓝色的文字，他会知道那玩意可以点进去么？。。” 上完那节课没多久我就感冒了。
 
-&lt;!-- ## 两者根本不具有可比性！
+
+**粗体** `**粗体**`当然说的是粗体字体，你以为是什么
+
+![](https://cdn-images-1.medium.com/max/800/1*MRPl_SNuRGJchb6eOAnkSA.jpeg)
+`![](插图.jpg)`用于非常粗暴的插图，记得链接使用绝对链接，然后素质高童鞋的一般会标注下图片来源。
+
+<!-- ## 两者根本不具有可比性！
 
 是的是的，Angular 是框架，React 是类库。所以有人觉得比较这两者没有逻辑性可言。大错特错！
 
-&gt; 选择 Angular 还是 React 就像选择直接购买成品电脑还是买零件自己组装一样。
+> 选择 Angular 还是 React 就像选择直接购买成品电脑还是买零件自己组装一样。
 
 两者的优缺点本文都会提及，我会拿 React 语法和组件模型跟 Angular 的语法和组件模型做对比。这就像是拿成品电脑的 CPU 跟零售的 CPU 做对比，没有任何不妥。
 
@@ -93,7 +94,7 @@ JSX 是一种类似 HTML 的语法，但它实际上会被编译成 JavaScript�
 
 终于来了。这才是 React 和 Angular 的根本区别。**很不幸，Angular 2 仍然是以 HTML 而非 JavaScript 为中心的。**Angular 2 并没有解决它设计上的根本问题：
 
-&gt; Angular 2 继续把 “JS” 放到 HTML 里。React 则把 “HTML” 放到 JS 里。
+> Angular 2 继续把 “JS” 放到 HTML 里。React 则把 “HTML” 放到 JS 里。
 
 这种分歧带来的影响真是再怎么强调也不为过。它们从根本上影响着开发体验。Angular 以 HTML 为中心的设计留下了巨大的缺陷。正如我在 [JSX：硬币的另一面](https://medium.com/@housecor/react-s-jsx-the-other-side-of-the-coin-2ace7ab62b98#.jqh5kkxlk) 中所说的，JavaScript 远比 HTML 要强大。因此，**增强 JavaScript 让其支持标签要比增强 HTML 让其支持逻辑要合理得多**。无论如何，HTML 与 JavaScript 都需要某种方式以粘合在一起。React 以 JavaScript 为中心的思路从根本上优于 Angular、Ember、Knockout 这些以 HTML 为中心的思路。
 
@@ -103,14 +104,14 @@ JSX 是一种类似 HTML 的语法，但它实际上会被编译成 JavaScript�
 
 Angular 2 延续了 Angular 1 试图让 HTML 更加强大的老路子。所以即使是像循环或者条件判断这样的简单任务你也不得不使用 Angular 2 的独特语法来完成。例如，Angular 2 通过两种语法同时提供了单向数据绑定与双向数据绑定，可不幸的是它们实在差得有点多：
 
-
+{% raw %}
 
 ```hbs
 {{myVar}}        //单向数据绑定
-ngModel=&quot;myVar&quot;  //双向数据绑定
+ngModel="myVar"  //双向数据绑定
 ```
 
-
+{% endraw %}
 
 在 React 中，数据绑定语法不取决于数据流的单双向（数据绑定的单双向是在其他地方处理的，不得不说我觉得理应如此）。不管是单向还是双向数据流，绑定语法都是这样的：
 
@@ -120,15 +121,15 @@ ngModel=&quot;myVar&quot;  //双向数据绑定
 
 Angular 2 的内联母版（inline master templates）使用了这样的语法：
 
-
+{% raw %}
 ```hbs
-&lt;ul&gt;
-  &lt;li *ngFor=&quot;#hero of heroes&quot;&gt;
+<ul>
+  <li *ngFor="#hero of heroes">
     {{hero.name}}
-  &lt;/li&gt;
-&lt;/ul&gt;
+  </li>
+</ul>
 ```
-
+{% endraw %}
 
 上面这个代码片段遍历了一组 hero，而我比较关心的几点是：
 
@@ -139,28 +140,28 @@ Angular 2 的内联母版（inline master templates）使用了这样的语法�
 相比上面 Angular 2 的语法，React 的语法可是纯净的 JavaScript （不过我得承认下面的属性 `key` 是个 React 的私货）
 
 ```hbs
-&lt;ul&gt;
-  { heroes.map(hero =&gt;
-    &lt;li key={hero.id}&gt;{hero.name}&lt;/li&gt;
+<ul>
+  { heroes.map(hero =>
+    <li key={hero.id}>{hero.name}</li>
   )}
-&lt;/ul&gt;
+</ul>
 ```
 
 鉴于 JS 原生支持循环，React JSX 利用 JS 的力量来做到这类事情简直易如反掌，配合 `map`、`filter` 能做的还远不止此。
 
 去看看 [Angular 2 速查表](https://angular.io/docs/ts/latest/guide/cheatsheet.html)？那不是 HTML，也不是 JavaScript……这叫 **Angular**。
 
-&gt; **读懂 Angular：** 学一大堆 Angular 特有的语法
-&gt;
-&gt; 读懂 React： 学 JavaScript
+> **读懂 Angular：** 学一大堆 Angular 特有的语法
+>
+> 读懂 React： 学 JavaScript
 
 React 因为语法和概念的简约而与众不同。我们不妨品味下当今流行的 JS 框架/库都是如何实现遍历的：
 
 ```
-Ember     : 
+Ember     : {{# each}}
 Angular 1 : ng-repeat
 Angular 2 : ngFor
-Knockout  : data-bind=&quot;foreach&quot;
+Knockout  : data-bind="foreach"
 React     : 直接用 JS 就好啦 :)
 ```
 
@@ -169,7 +170,7 @@ React     : 直接用 JS 就好啦 :)
 Angular 2 中的奇怪语法还有点击事件的绑定：
 
 ```javascript
-(click)=&quot;onSelect(hero)&quot;
+(click)="onSelect(hero)"
 ```
 
 相反，React 再一次使用了普通的 JavaScript：
@@ -186,7 +187,7 @@ onClick={this.onSelect.bind(this, hero)}
 
 JSX 具备的代码自动补全、编译时检查与丰富的错误提示已经创造了非常棒的开发体验，既为我们减少了输入，与节约了时间。而配合上热替换（hot reloading）与时间旅行（time travel），你将获得前所未有的开发体验，效率高到飞起。
 
-原文这里链了个 Youtube 上的视频：[Dan Abramov - Live React: Hot Reloading with Time Travel at react-europe 2015](https://www.youtube.com/watch?v=xsSnOQynTHs&amp;feature=youtu.be)，大家自备梯子。
+原文这里链了个 Youtube 上的视频：[Dan Abramov - Live React: Hot Reloading with Time Travel at react-europe 2015](https://www.youtube.com/watch?v=xsSnOQynTHs&feature=youtu.be)，大家自备梯子。
 
 #### 担心框架的大小？
 
@@ -209,9 +210,9 @@ JSX 具备的代码自动补全、编译时检查与丰富的错误提示已经�
 
 不过，我承认关于框架大小的担忧可能被夸大了：
 
-&gt; 大型应用往往至少有几百 KB 的代码，经常还更多，不管它们是不是使用了框架。开发者需要做很多的抽象来构建一个复杂的软件。无论这些抽象是来自框架的还是自己手写的，它都会对应用的加载性能造成负面影响。  
-&gt;
-&gt;  就算你完全杜绝框架的使用，许多应用仍然是几百 KB 的 JavaScript 在那。 — Tom Dale [JavaScript Frameworks and Mobile Performance](http://tomdale.net/2015/11/javascript-frameworks-and-mobile-performance/)
+> 大型应用往往至少有几百 KB 的代码，经常还更多，不管它们是不是使用了框架。开发者需要做很多的抽象来构建一个复杂的软件。无论这些抽象是来自框架的还是自己手写的，它都会对应用的加载性能造成负面影响。  
+>
+>  就算你完全杜绝框架的使用，许多应用仍然是几百 KB 的 JavaScript 在那。 — Tom Dale [JavaScript Frameworks and Mobile Performance](http://tomdale.net/2015/11/javascript-frameworks-and-mobile-performance/)
 
 Tom 的观点是对的。像 Angular、Ember 这样的框架之所以更大是因为它们自带了更多的功能。
 
@@ -223,7 +224,7 @@ React 是一个类库。它的哲学与 Angular、Ember 这些大而全的框架
 
 Unix 久经沙场屹立不倒，原因就是：
 
-&gt; 小而美、可组合、目的单一，这种哲学永远不会过时。
+> 小而美、可组合、目的单一，这种哲学永远不会过时。
 
 React 作为一个专注、可组合并且目的单一的工具，已经被[全世界的各大网站们](https://github.com/facebook/react/wiki/Sites-Using-React)使用，预示着它的前途光明（当然，Angular 也被用于[许多大牌网站](https://www.madewithangular.com/#/)）。
 
@@ -235,19 +236,5 @@ Angular 2 相比第一代有着长足的进步。新的组件模型比第一代�
 
 ### 著作权声明
 
-本文译自 [Angular 2 versus React: There Will Be Blood](https://medium.freecodecamp.com/angular-2-versus-react-there-will-be-blood-66595faafd51#.v4y4euy1r)，其实[之前有人翻译过](http://www.w3ctech.com/topic/1675?from=timeline&amp;isappinstalled=0)，但是翻得水平有一点不忍直视，我们不希望浪费这篇好文章。  
-本文由 [@李凌豪](https://www.zhihu.com/people/li-ling-hao) [@黄玄](https://www.zhihu.com/people/huxpro) 联合翻译，首次发布于[前端外刊评论 · 知乎专栏](http://zhuanlan.zhihu.com/FrontendMagazine)，转载请保留原文链接 ;) --&gt;
-</description>
-        <pubDate>Sun, 20 Nov 2016 04:00:00 -0800</pubDate>
-        <link>http://localhost:4000/2016/11/20/very-first-post/</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/11/20/very-first-post/</guid>
-        
-        <category>处女篇</category>
-        
-        <category>markdown</category>
-        
-        
-      </item>
-    
-  </channel>
-</rss>
+本文译自 [Angular 2 versus React: There Will Be Blood](https://medium.freecodecamp.com/angular-2-versus-react-there-will-be-blood-66595faafd51#.v4y4euy1r)，其实[之前有人翻译过](http://www.w3ctech.com/topic/1675?from=timeline&isappinstalled=0)，但是翻得水平有一点不忍直视，我们不希望浪费这篇好文章。  
+本文由 [@李凌豪](https://www.zhihu.com/people/li-ling-hao) [@黄玄](https://www.zhihu.com/people/huxpro) 联合翻译，首次发布于[前端外刊评论 · 知乎专栏](http://zhuanlan.zhihu.com/FrontendMagazine)，转载请保留原文链接 ;) -->
