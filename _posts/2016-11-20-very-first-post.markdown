@@ -3,7 +3,7 @@ layout:     post
 title:      "第一篇搞得我还有点紧张"
 subtitle:   "博客刚开处女篇就先带大家熟悉一下.markdown的语法吧"
 date:       2016-11-20 12:00:00
-author:     "Yux"
+author:     "YuXiao"
 header-img: "img/post-bg-re-vs-ng2.jpg"
 header-mask: 0.3
 catalog:    true
@@ -24,6 +24,8 @@ tags:
 
 ![](http://www.finebornchina.cn/news/121679dc8a5be1d541f0498367d8c22b.jpg)
 `![](插图.jpg)`用于非常粗暴的插图，记得链接使用绝对链接，然后素质高童鞋的一般会标注下图片来源。（话说话说左边那个帅哥好有男人味，他们夫妇感情一定很好！）
+
+妈呀，转眼又搭了一天，先歇会，未完待续。。。
 
 <!-- ## 两者根本不具有可比性！
 
