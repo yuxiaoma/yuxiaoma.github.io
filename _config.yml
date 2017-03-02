@@ -4,8 +4,8 @@ SEOTitle: 马宇骁的博客 | YuXiao Blog
 header-img: img/header-image.jpg
 email: ma.yuxiao1003@gmail.com
 description: "关于iOS和软件开发，读后感与日记 | 马宇骁，Mobile Engineer | 这里是 @YuXiao马宇骁 的个人博客，与你一起遣有涯之生。"
-keyword: "马宇骁, mayuxiao, yuxiao, yuxiao ma, Michael Ma, @mayuxiao, 马宇骁的博客, YuXiao Blog, 博客, 个人网站, 互联网, iOS, 编程, 产品, 小马马，小马哥，小骁骁, michael, 硅谷, silicon valley, 算法，leetcode"
-url: "yuxiaoma.com"              # your host, for absolute URL
+keyword: "马宇骁, mayuxiao, yuxiao, yuxiaoma, yuxiao ma, Michael Ma, @mayuxiao, 马宇骁的博客, YuXiao Blog, 博客, 个人网站, 互联网, iOS, 编程, 产品, 小马马，小马哥，小骁骁, michael, 硅谷, silicon valley, 算法，leetcode"
+url: "yuxiaoma.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
@@ -63,7 +63,7 @@ kramdown:
 
 # Google Analytics
 ga_track_id: 'UA-47551435-1'            # Format: UA-xxxxxx-xx
-ga_domain: yuxiaoma.com
+ga_domain: yuxiaoma.me
 
 
 
