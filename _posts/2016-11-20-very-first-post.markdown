@@ -4,7 +4,7 @@ title:      "第一篇搞得我还有点紧张"
 subtitle:   "博客刚开处女篇就先带大家熟悉一下.markdown的语法吧"
 date:       2016-11-20 12:00:00
 author:     "YuXiao"
-header-img: "img/post-bg-re-vs-ng2.jpg"
+header-img: "img/post-bg-2015.jpg"
 header-mask: 0.3
 catalog:    true
 tags:

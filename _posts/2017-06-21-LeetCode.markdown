@@ -1,0 +1,85 @@
+---
+layout:     post
+title:      "LeetCode开刷"
+subtitle:   "毕业了为找工作做准备，带大家刷一波LeetCode"
+date:       2017-06-21 12:00:00
+author:     "YuXiao"
+header-img: "img/post-bg-miui6.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - LeetCode
+    - Top Interview Questions
+---
+
+#### 1. Two Sum
+>Given an array of integers, return indices of the two numbers such that they add up to a specific target.  
+You may assume that each input would have exactly one solution, and you may not use the same element twice.  
+<br>
+**Example:**  
+Given nums = [2, 7, 11, 15], target = 9,  
+Because nums[0] + nums[1] = 2 + 7 = 9,  
+return [0, 1].
+<br>
+
+`First Idea`  
+If the given array is sorted, then we can use two iterators traverse the array from the front and back. Adding up the numbers in both indices see if it is equal to the target. If the result is less than the target, then we move the left index to the right to find a bigger result. If the result is bigger than target, we move right index to the left to add up to a smaller result. If the two indices cross each other then no result found.  
+The run time for this method is O(n). However, the array have to be sorted to make it work. If we gonna sort the array, then it is a O(nlog(n)) method.  
+
+`Second Idea`   
+If we store the complements of each of the numbers to the target while we are traverse the array, then we only need to traverse the array once. We can store the complements using MAP with (key: complement, value: index). Traverse the array, if we didn't find the complement in the MAP then add it to the MAP, if we find the complement, then the index of the complement, and the value in MAP[complement] is the two indices that will add up to the target. Since access operation is O(1) in MAP, the method is O(n).
+
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int length = nums.size();
+        map<int, int> m;
+        for (int i = 0; i < length; i++){
+            if (m.find(nums[i]) == m.end()){
+                m[target-nums[i]] = i;
+            }
+            else {
+                vector<int> v = {m[nums[i]], i};
+                return v;
+            }
+        }
+    }
+};
+```
+<br>
+
+#### 7. Reverse Integer
+
+>Reverse digits of an integer.
+<br><br>
+**Example1:** x = 123, return 321  
+**Example2:** x = -123, return -321
+<br><br>
+Have you thought about this?
+Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+<br>
+If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+<br>
+Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
+<br>
+For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+<br>
+`Note:`
+The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.
+
+```cpp
+class Solution {
+public:
+    int reverse(int x) {
+        long answer = 0;
+        int remain = x;
+        while (remain/10 != 0){
+            answer = (answer*10) + (remain%10);
+            remain = remain/10;
+        }
+        answer = answer*10 + remain;
+        return (answer > INT_MAX || answer < INT_MIN) ? 0 : answer;
+    }
+};
+```
