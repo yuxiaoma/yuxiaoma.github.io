@@ -19,7 +19,7 @@ tags:
 >Given a roman numeral, convert it to an integer.
 Input is guaranteed to be within the range from 1 to 3999.
 
-`Thought Process`
+`Thought Process:`  
 First, we need to find the pattern of the Roman Numeral.  
 I:1 V:5 X:10 L:50 C:100 D:500 M:1000  
 The pattern I found is that if the roman numeral letter at the left is smaller than the one on the right, the left one become negative when adding them up.  
@@ -65,7 +65,7 @@ Example 2:
 Input: 4
 Output: "1211"  
 
-`Thought Process`
+`Thought Process:`  
 For all the sequence kind of questions, recursive solution would be the best to try first. All we need to do is to set the base case to 1, then "Count and Say" the n-1th term.
 
 ```cpp
@@ -117,12 +117,14 @@ public:
         return rev;
     }
 };
-```  
+```
+
+>2017-06-24  
 #### 20. Valid Parentheses
 >Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
 
-`Thought Process`
+`Thought Process:`  
 
 ```cpp
 class Solution {
