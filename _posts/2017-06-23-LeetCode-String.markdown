@@ -13,8 +13,10 @@ tags:
     - LeetCode-String
 ---
 
+>2017-06-23
+
 #### 13. Roman To integer
-Given a roman numeral, convert it to an integer.
+>Given a roman numeral, convert it to an integer.
 Input is guaranteed to be within the range from 1 to 3999.
 
 `Thought Process`
@@ -45,7 +47,7 @@ public:
 
 
 #### 38. Count and Say
-The count-and-say sequence is the sequence of integers with the first five terms as following:  
+>The count-and-say sequence is the sequence of integers with the first five terms as following:  
 1.     1
 2.     11
 3.     21
@@ -97,7 +99,7 @@ public:
 
 
 #### 344. Reverse String
-Write a function that takes a string as input and returns the string reversed.  
+>Write a function that takes a string as input and returns the string reversed.  
 Example:
 Given s = "hello", return "olleh".
 
@@ -113,6 +115,39 @@ public:
             rev[j] = temp;
         }
         return rev;
+    }
+};
+```  
+#### 20. Valid Parentheses
+>Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+
+`Thought Process`
+
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        map <char, char> ref = {
+            {'(', ')'}, {'{', '}'}, {'[', ']'}
+        };
+        stack<char> stack;
+        string open = "({[";
+        for(int i = 0; i < s.size(); i++){
+            char check = s[i];
+            if (open.find(check) != std::string::npos){
+                stack.push(check);
+            }
+            else {
+                if (!stack.empty() && ref[stack.top()] == check){
+                    stack.pop();
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+        return stack.empty();
     }
 };
 ```
