@@ -8,7 +8,6 @@ header-img: "img/post-bg-2015.jpg"
 header-mask: 0.3
 catalog:    true
 tags:
-    - 处女篇
     - markdown
 ---
 

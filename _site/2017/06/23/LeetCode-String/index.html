@@ -10,7 +10,7 @@
     <meta name="keywords"  content="马宇骁, mayuxiao, yuxiao, yuxiaoma, yuxiao ma, Michael Ma, @mayuxiao, 马宇骁的博客, YuXiao Blog, 博客, 个人网站, 互联网, iOS, 编程, 产品, 小马马，小马哥，小骁骁, michael, 硅谷, silicon valley, 算法，leetcode">
     <meta name="theme-color" content="#000000">
     
-    <title>LeetCode开刷 - 马宇骁的博客 | YuXiao Blog</title>
+    <title>LeetCode: Top Interview Questions - String - 马宇骁的博客 | YuXiao Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/06/21/LeetCode/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/23/LeetCode-String/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,13 +181,15 @@
                         
                         <a class="tag" href="/tags/#Top Interview Questions" title="Top Interview Questions">Top Interview Questions</a>
                         
+                        <a class="tag" href="/tags/#LeetCode-String" title="LeetCode-String">LeetCode-String</a>
+                        
                     </div>
-                    <h1>LeetCode开刷</h1>
+                    <h1>LeetCode: Top Interview Questions - String</h1>
                     
                     
-                    <h2 class="subheading">毕业了为找工作做准备，带大家刷一波LeetCode</h2>
+                    <h2 class="subheading">这里是String类型题的锦集</h2>
                     
-                    <span class="meta">Posted by YuXiao on June 21, 2017</span>
+                    <span class="meta">Posted by YuXiao on June 23, 2017</span>
                 </div>
             </div>
         </div>
@@ -205,77 +207,105 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h4 id="1-two-sum">1. Two Sum</h4>
-<blockquote>
-  <p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.<br />
-You may assume that each input would have exactly one solution, and you may not use the same element twice.<br />
-<br />
-<strong>Example:</strong><br />
-Given nums = [2, 7, 11, 15], target = 9,<br />
-Because nums[0] + nums[1] = 2 + 7 = 9,<br />
-return [0, 1].
-<br /></p>
-</blockquote>
+				<h4 id="13-roman-to-integer">13. Roman To integer</h4>
+<p>Given a roman numeral, convert it to an integer.
+Input is guaranteed to be within the range from 1 to 3999.</p>
 
-<p><code class="highlighter-rouge">First Idea</code><br />
-If the given array is sorted, then we can use two iterators traverse the array from the front and back. Adding up the numbers in both indices see if it is equal to the target. If the result is less than the target, then we move the left index to the right to find a bigger result. If the result is bigger than target, we move right index to the left to add up to a smaller result. If the two indices cross each other then no result found.<br />
-The run time for this method is O(n). However, the array have to be sorted to make it work. If we gonna sort the array, then it is a O(nlog(n)) method.</p>
-
-<p><code class="highlighter-rouge">Second Idea</code> <br />
-If we store the complements of each of the numbers to the target while we are traverse the array, then we only need to traverse the array once. We can store the complements using MAP with (key: complement, value: index). Traverse the array, if we didn’t find the complement in the MAP then add it to the MAP, if we find the complement, then the index of the complement, and the value in MAP[complement] is the two indices that will add up to the target. Since access operation is O(1) in MAP, the method is O(n).</p>
+<p><code class="highlighter-rouge">Thought Process</code>
+First, we need to find the pattern of the Roman Numeral.<br />
+I:1 V:5 X:10 L:50 C:100 D:500 M:1000<br />
+The pattern I found is that if the roman numeral letter at the left is smaller than the one on the right, the left one become negative when adding them up.<br />
+Example:<br />
+IV: 5-1=4 ; VI: 5+1=6
+The idea is build a dictionary first then adding up all the roman letters according to the pattern we found above.</p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">twoSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">m</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">m</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
-                <span class="n">m</span><span class="p">[</span><span class="n">target</span><span class="o">-</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">romanToInt</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">lookup</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">{</span><span class="sc">'I'</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="sc">'V'</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="sc">'X'</span><span class="p">,</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="sc">'L'</span><span class="p">,</span> <span class="mi">50</span><span class="p">},</span> <span class="p">{</span><span class="sc">'C'</span><span class="p">,</span> <span class="mi">100</span><span class="p">},</span> <span class="p">{</span><span class="sc">'D'</span><span class="p">,</span> <span class="mi">500</span><span class="p">},</span> <span class="p">{</span><span class="sc">'M'</span><span class="p">,</span> <span class="mi">1000</span><span class="p">}</span>
+        <span class="p">};</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pre</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">lookup</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&gt;=</span> <span class="n">pre</span><span class="p">)</span> <span class="p">{</span><span class="n">sum</span> <span class="o">+=</span> <span class="n">num</span><span class="p">;}</span> <span class="k">else</span> <span class="p">{</span> <span class="n">sum</span> <span class="o">-=</span> <span class="n">num</span><span class="p">;}</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="38-count-and-say">38. Count and Say</h4>
+<p>The count-and-say sequence is the sequence of integers with the first five terms as following:</p>
+<ol>
+  <li>1</li>
+  <li>11</li>
+  <li>21</li>
+  <li>1211</li>
+  <li>111221
+1 is read off as “one 1” or 11.
+11 is read off as “two 1s” or 21.
+21 is read off as “one 2, then one 1” or 1211.
+Given an integer n, generate the nth term of the count-and-say sequence.<br />
+Note: Each term of the sequence of integers will be represented as a string.<br />
+Example 1:<br />
+Input: 1
+Output: “1”
+Example 2:<br />
+Input: 4
+Output: “1211”</li>
+</ol>
+
+<p><code class="highlighter-rouge">Thought Process</code>
+For all the sequence kind of questions, recursive solution would be the best to try first. All we need to do is to set the base case to 1, then “Count and Say” the n-1th term.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">countAndSay</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="s">"1"</span><span class="p">;</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">string</span> <span class="n">prev</span> <span class="o">=</span> <span class="n">countAndSay</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">string</span> <span class="n">say</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="kt">char</span> <span class="n">d</span> <span class="o">=</span> <span class="n">prev</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">prev</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">prev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">d</span><span class="p">){</span>
+                    <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">say</span> <span class="o">+=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+                    <span class="n">say</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">prev</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="p">}</span>
             <span class="p">}</span>
-            <span class="k">else</span> <span class="p">{</span>
-                <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="n">m</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">i</span><span class="p">};</span>
-                <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
-            <span class="p">}</span>
+            <span class="n">say</span> <span class="o">+=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+            <span class="n">say</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">say</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre>
 </div>
-<p><br /></p>
 
-<h4 id="7-reverse-integer">7. Reverse Integer</h4>
-
-<blockquote>
-  <p>Reverse digits of an integer.
-<br /><br />
-<strong>Example1:</strong> x = 123, return 321<br />
-<strong>Example2:</strong> x = -123, return -321
-<br /><br />
-Have you thought about this?
-Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
-<br />
-If the integer’s last digit is 0, what should the output be? ie, cases such as 10, 100.
-<br />
-Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
-<br />
-For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
-<br />
-<code class="highlighter-rouge">Note:</code>
-The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows.</p>
-</blockquote>
+<h4 id="344-reverse-string">344. Reverse String</h4>
+<p>Write a function that takes a string as input and returns the string reversed.<br />
+Example:
+Given s = “hello”, return “olleh”.</p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">reverse</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">long</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="kt">int</span> <span class="n">remain</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">remain</span><span class="o">/</span><span class="mi">10</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
-            <span class="n">answer</span> <span class="o">=</span> <span class="p">(</span><span class="n">answer</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">remain</span><span class="o">%</span><span class="mi">10</span><span class="p">);</span>
-            <span class="n">remain</span> <span class="o">=</span> <span class="n">remain</span><span class="o">/</span><span class="mi">10</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">reverseString</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="n">string</span> <span class="n">rev</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">,</span> <span class="n">j</span><span class="o">--</span><span class="p">){</span>
+            <span class="kt">char</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rev</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+            <span class="n">rev</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="n">answer</span> <span class="o">=</span> <span class="n">answer</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="n">remain</span><span class="p">;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">answer</span> <span class="o">&gt;</span> <span class="n">INT_MAX</span> <span class="o">||</span> <span class="n">answer</span> <span class="o">&lt;</span> <span class="n">INT_MIN</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">answer</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">rev</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre>
@@ -290,19 +320,12 @@ The input is assumed to be a 32-bit signed integer. Your function should return 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/11/20/very-first-post/" data-toggle="tooltip" data-placement="top" title="第一篇搞得我还有点紧张">
+                        <a href="/2017/06/21/LeetCode/" data-toggle="tooltip" data-placement="top" title="LeetCode开刷">
                         Previous<br>
-                        <span>第一篇搞得我还有点紧张</span>
+                        <span>LeetCode开刷</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/06/23/LeetCode-String/" data-toggle="tooltip" data-placement="top" title="LeetCode: Top Interview Questions - String">
-                        Next<br>
-                        <span>LeetCode: Top Interview Questions - String</span>
-                        </a>
-                    </li>
                     
                 </ul>
 
