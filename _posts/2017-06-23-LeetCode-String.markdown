@@ -125,6 +125,7 @@ public:
 The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
 
 `Thought Process:`  
+First, we need to create a stack to store the open parenthesis we encounter. The the next char is the close parenthesis of the the one we stored, then remove the pair from the stack, if not, we push it to the top of the stack. At last, we check if the stack is empty.
 
 ```cpp
 class Solution {
