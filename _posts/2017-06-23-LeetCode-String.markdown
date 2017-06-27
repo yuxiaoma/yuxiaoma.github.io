@@ -275,7 +275,8 @@ For example, given n = 3, a solution set is:
 
 When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
 For the recursive solution, base case is when the number of left and right parentheses both equal to n. Otherwise as long as number of "(" is less than n, we can add "(" to the string. As long as number of ")" is less than the number of "(", we can push ")" to the string. Do not forget to pop one parenthesis when a combo is complete to get to another route of the tree.
-![](img/GenerateParentheses.jpg)
+
+![](http://img.blog.csdn.net/20150707112601827)
 
 ```cpp
 class Solution {

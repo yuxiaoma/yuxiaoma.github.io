@@ -207,11 +207,17 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h4 id="13-roman-to-integer">13. Roman To integer</h4>
-<p>Given a roman numeral, convert it to an integer.
-Input is guaranteed to be within the range from 1 to 3999.</p>
+				<blockquote>
+  <p>2017-06-23</p>
+</blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code>
+<h4 id="13-roman-to-integer">13. Roman To integer</h4>
+<blockquote>
+  <p>Given a roman numeral, convert it to an integer.
+Input is guaranteed to be within the range from 1 to 3999.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code><br />
 First, we need to find the pattern of the Roman Numeral.<br />
 I:1 V:5 X:10 L:50 C:100 D:500 M:1000<br />
 The pattern I found is that if the roman numeral letter at the left is smaller than the one on the right, the left one become negative when adding them up.<br />
@@ -238,13 +244,14 @@ The idea is build a dictionary first then adding up all the roman letters accord
 </div>
 
 <h4 id="38-count-and-say">38. Count and Say</h4>
-<p>The count-and-say sequence is the sequence of integers with the first five terms as following:</p>
-<ol>
-  <li>1</li>
-  <li>11</li>
-  <li>21</li>
-  <li>1211</li>
-  <li>111221
+<blockquote>
+  <p>The count-and-say sequence is the sequence of integers with the first five terms as following:</p>
+  <ol>
+    <li>1</li>
+    <li>11</li>
+    <li>21</li>
+    <li>1211</li>
+    <li>111221
 1 is read off as “one 1” or 11.
 11 is read off as “two 1s” or 21.
 21 is read off as “one 2, then one 1” or 1211.
@@ -256,9 +263,10 @@ Output: “1”
 Example 2:<br />
 Input: 4
 Output: “1211”</li>
-</ol>
+  </ol>
+</blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code>
+<p><code class="highlighter-rouge">Thought Process:</code><br />
 For all the sequence kind of questions, recursive solution would be the best to try first. All we need to do is to set the base case to 1, then “Count and Say” the n-1th term.</p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
@@ -291,9 +299,11 @@ For all the sequence kind of questions, recursive solution would be the best to 
 </div>
 
 <h4 id="344-reverse-string">344. Reverse String</h4>
-<p>Write a function that takes a string as input and returns the string reversed.<br />
+<blockquote>
+  <p>Write a function that takes a string as input and returns the string reversed.<br />
 Example:
 Given s = “hello”, return “olleh”.</p>
+</blockquote>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -306,6 +316,212 @@ Given s = “hello”, return “olleh”.</p>
             <span class="n">rev</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">rev</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>2017-06-24</p>
+</blockquote>
+
+<h4 id="20-valid-parentheses">20. Valid Parentheses</h4>
+<blockquote>
+  <p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[’ and ‘]’, determine if the input string is valid.
+The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code><br />
+First, we need to create a stack to store the open parenthesis we encounter. The the next char is the close parenthesis of the the one we stored, then remove the pair from the stack, if not, we push it to the top of the stack. At last, we check if the stack is empty.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isValid</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">map</span> <span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">char</span><span class="o">&gt;</span> <span class="n">ref</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">{</span><span class="sc">'('</span><span class="p">,</span> <span class="sc">')'</span><span class="p">},</span> <span class="p">{</span><span class="sc">'{'</span><span class="p">,</span> <span class="sc">'}'</span><span class="p">},</span> <span class="p">{</span><span class="sc">'['</span><span class="p">,</span> <span class="sc">']'</span><span class="p">}</span>
+        <span class="p">};</span>
+        <span class="n">stack</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">stack</span><span class="p">;</span>
+        <span class="n">string</span> <span class="n">open</span> <span class="o">=</span> <span class="s">"({["</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="kt">char</span> <span class="n">check</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">open</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">check</span><span class="p">)</span> <span class="o">!=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">){</span>
+                <span class="n">stack</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">check</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stack</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">ref</span><span class="p">[</span><span class="n">stack</span><span class="p">.</span><span class="n">top</span><span class="p">()]</span> <span class="o">==</span> <span class="n">check</span><span class="p">){</span>
+                    <span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>2017-06-25</p>
+</blockquote>
+
+<h4 id="14-longest-common-prefix">14. Longest Common Prefix</h4>
+<blockquote>
+  <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process</code></p>
+<ol>
+  <li>Find prefix of first two strings.</li>
+  <li>Use this prefix to compare and update with the rest of the strings.</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">longestCommonPrefix</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">strs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="s">""</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">string</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">findPrefix</span><span class="p">(</span><span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">strs</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">findPrefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">strs</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">prefix</span> <span class="o">==</span> <span class="s">""</span><span class="p">){</span>
+                <span class="k">return</span> <span class="n">prefix</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">prefix</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">string</span> <span class="n">findPrefix</span><span class="p">(</span><span class="n">string</span> <span class="n">s1</span><span class="p">,</span> <span class="n">string</span> <span class="n">s2</span><span class="p">){</span>
+        <span class="n">string</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">(</span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">());</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+                <span class="n">prefix</span> <span class="o">+=</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">prefix</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Shorting and faster, but harder to understand
+</span><span class="n">string</span> <span class="nf">longestCommonPrefix</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">strs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">strs</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="s">""</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">length</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">strs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">strs</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">length</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">strs</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">strs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="28-implement-strstr">28. Implement strStr()</h4>
+<blockquote>
+  <p>Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process</code>
+Get the substring of “haystack” with the length of “needle” one by one and compare with “needle”, if found, return position.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">strStr</span><span class="p">(</span><span class="n">string</span> <span class="n">haystack</span><span class="p">,</span> <span class="n">string</span> <span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">h_length</span> <span class="o">=</span> <span class="n">haystack</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">n_length</span> <span class="o">=</span> <span class="n">needle</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">haystack_copy</span> <span class="o">=</span> <span class="n">haystack</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n_length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">h_length</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">h_length</span> <span class="o">&lt;</span> <span class="n">n_length</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">h_length</span> <span class="o">-</span> <span class="n">n_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">needle</span> <span class="o">==</span> <span class="n">haystack_copy</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n_length</span><span class="p">))</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="125-valid-palindrome">125. Valid Palindrome</h4>
+<blockquote>
+  <p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.<br />
+For example,
+“A man, a plan, a canal: Panama” is a palindrome.
+“race a car” is not a palindrome.<br />
+Note:
+Have you consider that the string might be empty? This is a good question to ask during an interview.<br />
+For the purpose of this problem, we define empty string as valid palindrome.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process</code></p>
+<ol>
+  <li>Get rid of all the spaces and special characters</li>
+  <li>Make all letters in lowercase</li>
+  <li>Reverse the string and see if it is the same as the original string.</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+       <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isalnum</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">]))</span> <span class="n">left</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">right</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isalnum</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">]))</span> <span class="n">right</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">left</span><span class="o">&gt;=</span><span class="n">right</span><span class="p">)</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">tolower</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="o">++</span><span class="p">])</span><span class="o">!=</span><span class="n">tolower</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="o">--</span><span class="p">]))</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="22-generate-parentheses">22. Generate Parentheses</h4>
+<blockquote>
+  <p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br />
+For example, given n = 3, a solution set is:<br />
+[
+  “((()))”,
+  “(()())”,
+  “(())()”,
+  “()(())”,
+  “()()()”
+]</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process</code></p>
+
+<p>When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
+For the recursive solution, base case is when the number of left and right parentheses both equal to n. Otherwise as long as number of “(“ is less than n, we can add “(“ to the string. As long as number of “)” is less than the number of “(“, we can push “)” to the string. Do not forget to pop one parenthesis when a combo is complete to get to another route of the tree.</p>
+
+<p><img src="http://img.blog.csdn.net/20150707112601827" alt="" /></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">generateParenthesis</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">all</span><span class="p">;</span>
+        <span class="n">string</span> <span class="n">combo</span><span class="p">;</span>
+        <span class="n">makeCombo</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">combo</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">all</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">makeCombo</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">all</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">combo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">L</span><span class="p">,</span> <span class="kt">int</span> <span class="n">R</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">L</span> <span class="o">==</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">R</span> <span class="o">==</span> <span class="n">n</span><span class="p">){</span>
+            <span class="n">all</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">combo</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">L</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">){</span>
+            <span class="n">combo</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="sc">'('</span><span class="p">);</span>
+            <span class="n">makeCombo</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">combo</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+            <span class="n">combo</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">L</span><span class="p">){</span>
+            <span class="n">combo</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="sc">')'</span><span class="p">);</span>
+            <span class="n">makeCombo</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">combo</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+            <span class="n">combo</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre>
