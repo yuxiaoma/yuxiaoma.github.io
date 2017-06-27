@@ -207,7 +207,7 @@ string longestCommonPrefix(vector<string>& strs) {
 }
 ```
 
-#### 28 Implement strStr()
+#### 28. Implement strStr()
 >Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
 `Thought Process`
@@ -230,7 +230,7 @@ public:
 };
 ```
 
-#### 125 Valid Palindrome
+#### 125. Valid Palindrome
 >Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.  
 For example,
 "A man, a plan, a canal: Panama" is a palindrome.
@@ -260,7 +260,7 @@ public:
 };
 ```
 
-#### Generate Parentheses
+#### 22. Generate Parentheses
 >Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.  
 For example, given n = 3, a solution set is:  
 [
@@ -271,7 +271,11 @@ For example, given n = 3, a solution set is:
   "()()()"
 ]
 
-`Thought Process`
+`Thought Process`  
+
+When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
+For the recursive solution, base case is when the number of left and right parentheses both equal to n. Otherwise as long as number of "(" is less than n, we can add "(" to the string. As long as number of ")" is less than the number of "(", we can push ")" to the string. Do not forget to pop one parenthesis when a combo is complete to get to another route of the tree.
+![](img/GenerateParentheses.jpg)
 
 ```cpp
 class Solution {
