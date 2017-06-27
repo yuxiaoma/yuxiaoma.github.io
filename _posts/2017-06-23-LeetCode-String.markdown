@@ -161,7 +161,7 @@ public:
 #### 14. Longest Common Prefix
 >Write a function to find the longest common prefix string amongst an array of strings.
 
-`Thought Process`
+`Thought Process:`
 1. Find prefix of first two strings.
 2. Use this prefix to compare and update with the rest of the strings.
 
@@ -210,7 +210,7 @@ string longestCommonPrefix(vector<string>& strs) {
 #### 28. Implement strStr()
 >Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
-`Thought Process`
+`Thought Process:`
 Get the substring of "haystack" with the length of "needle" one by one and compare with "needle", if found, return position.
 
 ```cpp
@@ -239,7 +239,7 @@ Note:
 Have you consider that the string might be empty? This is a good question to ask during an interview.  
 For the purpose of this problem, we define empty string as valid palindrome.
 
-`Thought Process`
+`Thought Process:`
 1. Get rid of all the spaces and special characters
 2. Make all letters in lowercase
 3. Reverse the string and see if it is the same as the original string.
@@ -271,8 +271,7 @@ For example, given n = 3, a solution set is:
   "()()()"
 ]
 
-`Thought Process`  
-
+`Thought Process:`
 When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
 For the recursive solution, base case is when the number of left and right parentheses both equal to n. Otherwise as long as number of "(" is less than n, we can add "(" to the string. As long as number of ")" is less than the number of "(", we can push ")" to the string. Do not forget to pop one parenthesis when a combo is complete to get to another route of the tree.
 
