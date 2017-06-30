@@ -349,3 +349,273 @@ public:
     }
 };
 ```
+
+>2017-06-28
+
+#### 49. Group Anagrams
+>Given an array of strings, group anagrams together.  
+For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Return:  
+[
+  ["ate", "eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+Note: All inputs will be in lower-case.
+
+`Thought Process：`
+For this question we are grouping the strings with the same letter set. First, we need to find a common key to represent the common letter set. The best key will be the set itself, which is just any of the anagrams with the letters sorted.
+We store the set to a Map, key: the sorted letters of any anagram in that set. Value: an array of string contain anagram in that set.
+This way we only need to scan the input array once O(n), to put all the anagrams into the map and the answer is all the values in map grouped.
+
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map<string, vector<string>> hashMap;
+        for (int i = 0; i < strs.size(); i++){
+            string curr = strs[i];
+            string curr_sorted = curr;
+            sort(curr_sorted.begin(), curr_sorted.end());
+            if (hashMap.find(curr_sorted) == hashMap.end()){
+                vector<string> v = {curr};
+                hashMap[curr_sorted] = v;
+            }
+            else {
+                hashMap[curr_sorted].push_back(curr);
+            }
+        }
+        vector<vector<string>> result;
+        for (std::map<string, vector<string>>::iterator iter = hashMap.begin(); iter != hashMap.end(); ++iter){
+            result.push_back(iter->second);
+        }
+        return result;
+    }
+};
+```
+
+#### 227. Basic Calculator
+>Implement a basic calculator to evaluate a simple expression string.  
+The expression string contains only non-negative integers, +, -, * , / operators and empty spaces . The integer division should truncate toward zero.  
+You may assume that the given expression is always valid.  
+Some examples:  
+"3+2*2" = 7  
+" 3/2 " = 1  
+" 3+5 / 2 " = 5  
+Note: Do not use the eval built-in library function.
+
+`Thought Process:`
+For this question, the order of the operations matters. We need to store numbers with '+', and '-' signs into a stack and deal with them after '* ' and '/'. If the sign is '+', push it onto the stack, if '-', push it onto stack with negative sign. If we have '* ', or '/', we calculate that number with the number on the top of the stack and push the result onto the stack. At last, we get the solution by adding up all the number in the stack.
+
+```cpp
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> nums;
+        int d = 0, result = 0;
+        char sign = '+';
+        for (int i = 0; i < s.size(); i++){
+            if (s[i] >= '0'){
+                d = d*10 + (s[i]-'0');
+            }
+            if (s[i] < '0' && s[i] != ' ' || i == s.size()-1){
+                if (sign == '+') nums.push(d);
+                else if (sign == '-') nums.push(-d);
+                else if (sign == '*' || sign == '/'){
+                    int temp = sign == '*' ? nums.top() * d : nums.top() / d;
+                    nums.pop();
+                    nums.push(temp);
+                }
+                sign = s[i];
+                d = 0;
+            }
+        }
+        while (!nums.empty()){
+            result += nums.top();
+            nums.pop();
+        }
+        return result;
+    }
+};
+```
+
+#### 5. Longest Palindromic Substring
+>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.  
+Example:  
+Input: "babad"  
+Output: "bab"  
+Note: "aba" is also a valid answer.
+Example:  
+Input: "cbbd"  
+Output: "bb"
+
+`Thought Process:`  
+<p>This article is for intermediate readers. It introduces the following ideas:
+Palindrome, Dynamic Programming and String Manipulation. Make sure you understand what a palindrome means. A palindrome is a string which reads the same in both directions. For example, <script type="math/tex; mode=display">\textrm{''aba''}</script> is a palindome, <script type="math/tex; mode=display">\textrm{''abc''}</script> is not.</p>
+<hr />
+<p id="approach-1-longest-common-substring-accepted"><strong>Approach #1 (Longest Common Substring) [Accepted]</strong></p>
+<p><strong>Common mistake</strong></p>
+<p>Some people will be tempted to come up with a quick solution, which is unfortunately flawed (however can be corrected easily):</p>
+<blockquote>
+<p>Reverse <script type="math/tex; mode=display">S</script> and become <script type="math/tex; mode=display">S'</script>. Find the longest common substring between <script type="math/tex; mode=display">S</script> and <script type="math/tex; mode=display">S'</script>, which must also be the longest palindromic substring.</p>
+</blockquote>
+<p>This seemed to work, let’s see some examples below.</p>
+<p>For example, S = "caba", S' = "abac"</p>
+<p>The longest common substring between S and S' is "aba", which is the answer.</p>
+<p>Let’s try another example: S = "abacdfgdcaba", S' = "abacdgfdcaba"</p>
+<p>The longest common substring between S and S' is "abacd" Clearly, this is not a valid palindrome.</p>
+<p><strong>Algorithm</strong></p>
+<p>We could see that the longest common substring method fails when there exists a reversed copy of a non-palindromic substring in some other part of <script type="math/tex; mode=display">S</script>. To rectify this, each time we find a longest common substring candidate, we check if the substring’s indices are the same as the reversed substring’s original indices. If it is, then we attempt to update the longest palindrome found so far; if not, we skip this and find the next candidate.</p>
+<p>This gives us an <script type="math/tex; mode=display">O(n^2)</script> Dynamic Programming solution which uses <script type="math/tex; mode=display">O(n^2)</script> space (could be improved to use <script type="math/tex; mode=display">O(n)</script> space). Please read more about Longest Common Substring <a href="http://en.wikipedia.org/wiki/Longest_common_substring">here</a>.</p>
+<hr />
+<p id="approach-2-brute-force-time-limit-exceeded"><strong>Approach #2 (Brute Force) [Time Limit Exceeded]</strong></p>
+<p>The obvious brute force solution is to pick all possible starting and ending positions for a substring, and verify if it is a palindrome.</p>
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^3)</script>.
+Assume that <script type="math/tex; mode=display">n</script> is the length of the input string, there are a total of <script type="math/tex; mode=display">\binom{n}{2} = \frac{n(n-1)}{2}</script> such substrings (excluding the trivial solution where a character itself is a palindrome). Since verifying each substring takes <script type="math/tex; mode=display">O(n)</script> time, the run time complexity is <script type="math/tex; mode=display">O(n^3)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(1)</script>.</p>
+</li>
+</ul>
+<hr />
+<p id="approach-3-dynamic-programming-accepted"><strong>Approach #3 (Dynamic Programming) [Accepted]</strong></p>
+<p>To improve over the brute force solution, we first observe how we can avoid unnecessary re-computation while validating palindromes. Consider the case <script type="math/tex; mode=display">\textrm{''ababa''}</script>. If we already knew that <script type="math/tex; mode=display">\textrm{''bab''}</script> is a palindrome, it is obvious that <script type="math/tex; mode=display">\textrm{''ababa''}</script> must be a palindrome since the two left and right end letters are the same.</p>
+<p>We define <script type="math/tex; mode=display">P(i,j)</script> as following:</p>
+<p>
+<script type="math/tex; mode=display">
+P(i,j) =
+     \begin{cases}
+       \text{true,} &\quad\text{if the substring } S_i \dots S_j \text{ is a palindrome}\\
+       \text{false,} &\quad\text{otherwise.} \
+     \end{cases}
+</script>
+</p>
+<p>Therefore,</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, j) = ( P(i+1, j-1) \text{ and } S_i == S_j )
+</script>
+</p>
+<p>The base cases are:</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, i) = true
+</script>
+</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, i+1) = ( S_i == S_{i+1} )
+</script>
+</p>
+<p>This yields a straight forward DP solution, which we first initialize the one and two letters palindromes, and work our way up finding all three letters palindromes, and so on...</p>
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+This gives us a runtime complexity of <script type="math/tex; mode=display">O(n^2)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+It uses <script type="math/tex; mode=display">O(n^2)</script> space to store the table.</p>
+</li>
+</ul>
+<p><strong>Additional Exercise</strong></p>
+<p>Could you improve the above space complexity further and how?</p>
+<hr />
+<p id="approach-4-expand-around-center-accepted"><strong>Approach #4 (Expand Around Center) [Accepted]</strong></p>
+<p>In fact, we could solve it in <script type="math/tex; mode=display">O(n^2)</script> time using only constant space.</p>
+<p>We observe that a palindrome mirrors around its center. Therefore, a palindrome can be expanded from its center, and there are only <script type="math/tex; mode=display">2n - 1</script> such centers.</p>
+<p>You might be asking why there are <script type="math/tex; mode=display">2n - 1</script> but not <script type="math/tex; mode=display">n</script> centers? The reason is the center of a palindrome can be in between two letters. Such palindromes have even number of letters (such as <script type="math/tex; mode=display">\textrm{''abba''}</script>) and its center are between the two <script type="math/tex; mode=display">\textrm{'b'}</script>s.</p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="n">String</span> <span class="nf">longestPalindrome</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">len1</span> <span class="o">=</span> <span class="n">expandAroundCenter</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">len2</span> <span class="o">=</span> <span class="n">expandAroundCenter</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">len1</span><span class="o">,</span> <span class="n">len2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="o">(</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">int</span> <span class="nf">expandAroundCenter</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">L</span> <span class="o">=</span> <span class="n">left</span><span class="o">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">L</span><span class="o">)</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">R</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">L</span><span class="o">--;</span>
+        <span class="n">R</span><span class="o">++;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+Since expanding a palindrome around its center could take <script type="math/tex; mode=display">O(n)</script> time, the overall complexity is <script type="math/tex; mode=display">O(n^2)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(1)</script>.</p>
+</li>
+</ul>
+<p id="approach-5-manachers-algorithm-accepted"><strong>Approach #5 (Manacher's Algorithm) [Accepted]</strong></p>
+<p>There is even an <script type="math/tex; mode=display">O(n)</script> algorithm called Manacher's algorithm, explained <a href="http://articles.leetcode.com/longest-palindromic-substring-part-ii/">here in detail</a>. However, it is a non-trivial algorithm, and no one expects you to come up with this algorithm in a 45 minutes coding session. But, please go ahead and understand it, I promise it will be a lot of fun.</p>
+
+<a href="https://leetcode.com/articles/longest-palindromic-substring/">Original post can be find here.</a>
+
+`My Solution:`  
+```cpp
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int dp[s.size()][s.size()] = {0};
+        int left = 0, right = 0, len = 0;
+        for (int i = 0; i < s.size(); ++i){
+            for (int j = 0; j < i; ++j){
+                dp[j][i] = (s[i] == s[j] && (i - j < 2 || dp[j + 1][i - 1]));
+                if (dp[j][i] && i-j+1 > len){
+                    len = i-j+1;
+                    left = j;
+                    right = i;
+                }
+            }
+            dp[i][i] = 1;
+        }
+        return s.substr(left, right-left+1);
+    }
+};
+```
+
+#### 3. Longest Substring without Repeating Characters
+>Given a string, find the length of the longest substring without repeating characters.  
+Examples:  
+Given "abcabcbb", the answer is "abc", which the length is 3.  
+Given "bbbbb", the answer is "b", with the length of 1.  
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+`Thought Process:`  
+[Multiple great approaches can be find here](https://leetcode.com/articles/longest-substring-without-repeating-characters)
+
+```cpp
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        map<char, int> lookup;
+        int maxLen = 0, roundBegin = 0;
+        for (int i = 0; i < s.size(); i++){
+            if (!(lookup.find(s[i]) == lookup.end())){
+                roundBegin = max(roundBegin, lookup[s[i]]);
+            }
+            lookup[s[i]] = i+1;
+            maxLen = max(maxLen, i-roundBegin+1);
+        }
+        return maxLen;
+    }
+};
+```

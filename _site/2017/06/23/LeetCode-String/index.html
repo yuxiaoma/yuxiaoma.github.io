@@ -371,7 +371,7 @@ First, we need to create a stack to store the open parenthesis we encounter. The
   <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
 </blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code></p>
+<p><code class="highlighter-rouge">Thought Process:</code></p>
 <ol>
   <li>Find prefix of first two strings.</li>
   <li>Use this prefix to compare and update with the rest of the strings.</li>
@@ -424,7 +424,7 @@ First, we need to create a stack to store the open parenthesis we encounter. The
   <p>Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
 </blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code>
+<p><code class="highlighter-rouge">Thought Process:</code>
 Get the substring of “haystack” with the length of “needle” one by one and compare with “needle”, if found, return position.</p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
@@ -455,7 +455,7 @@ Have you consider that the string might be empty? This is a good question to ask
 For the purpose of this problem, we define empty string as valid palindrome.</p>
 </blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code></p>
+<p><code class="highlighter-rouge">Thought Process:</code></p>
 <ol>
   <li>Get rid of all the spaces and special characters</li>
   <li>Make all letters in lowercase</li>
@@ -491,9 +491,8 @@ For example, given n = 3, a solution set is:<br />
 ]</p>
 </blockquote>
 
-<p><code class="highlighter-rouge">Thought Process</code></p>
-
-<p>When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
+<p><code class="highlighter-rouge">Thought Process:</code>
+When we encounters questions involve find all combinations. Think the question as a tree related questions and try recursive solution first.
 For the recursive solution, base case is when the number of left and right parentheses both equal to n. Otherwise as long as number of “(“ is less than n, we can add “(“ to the string. As long as number of “)” is less than the number of “(“, we can push “)” to the string. Do not forget to pop one parenthesis when a combo is complete to get to another route of the tree.</p>
 
 <p><img src="http://img.blog.csdn.net/20150707112601827" alt="" /></p>
@@ -522,6 +521,337 @@ For the recursive solution, base case is when the number of left and right paren
             <span class="n">makeCombo</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">combo</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
             <span class="n">combo</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
         <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>2017-06-27</p>
+</blockquote>
+
+<h4 id="17-letter-combinations-of-a-phone-number">17. Letter Combinations of a Phone Number</h4>
+<blockquote>
+  <p>Given a digit string, return all possible letter combinations that the number could represent.<br />
+A mapping of digit to letters (just like on the telephone buttons) is given below.<br />
+Input:Digit string “23”
+Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code>
+This questions if one of the finding all combinations. Recursion should be tried first for this kind of question.
+First we need to create a dictionary for the number pad. For each level of recursion on digits[i], we need to loop through all possible letters according to digits[i] one by one and perform recursion call in side the loop to add different letters to the current combo we working on, then finally append it to our final solution.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">letterCombinations</span><span class="p">(</span><span class="n">string</span> <span class="n">digits</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">all</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">digits</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="k">return</span> <span class="n">all</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">{</span><span class="sc">'0'</span><span class="p">,</span> <span class="s">" "</span><span class="p">},</span> <span class="p">{</span><span class="sc">'2'</span><span class="p">,</span> <span class="s">"abc"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'3'</span><span class="p">,</span> <span class="s">"def"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'4'</span><span class="p">,</span> <span class="s">"ghi"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'5'</span><span class="p">,</span> <span class="s">"jkl"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'6'</span><span class="p">,</span> <span class="s">"mno"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'7'</span><span class="p">,</span> <span class="s">"pqrs"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'8'</span><span class="p">,</span> <span class="s">"tuv"</span><span class="p">},</span> <span class="p">{</span><span class="sc">'9'</span><span class="p">,</span> <span class="s">"wxyz"</span><span class="p">}</span>
+        <span class="p">};</span>
+        <span class="n">string</span> <span class="n">one</span><span class="p">(</span><span class="n">digits</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="sc">'\0'</span><span class="p">);</span>
+        <span class="n">findCombinations</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">digits</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dict</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">all</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">findCombinations</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">all</span><span class="p">,</span> <span class="n">string</span> <span class="n">digits</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">one</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">dict</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">digits</span><span class="p">.</span><span class="n">size</span><span class="p">()){</span>
+            <span class="n">all</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">one</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">string</span> <span class="n">letters</span> <span class="o">=</span> <span class="n">dict</span><span class="p">[</span><span class="n">digits</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">letters</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">one</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">letters</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+            <span class="n">findCombinations</span><span class="p">(</span><span class="n">all</span><span class="p">,</span> <span class="n">digits</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dict</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>2017-06-28</p>
+</blockquote>
+
+<h4 id="49-group-anagrams">49. Group Anagrams</h4>
+<blockquote>
+  <p>Given an array of strings, group anagrams together.<br />
+For example, given: [“eat”, “tea”, “tan”, “ate”, “nat”, “bat”],
+Return:<br />
+[
+  [“ate”, “eat”,”tea”],
+  [“nat”,”tan”],
+  [“bat”]
+]
+Note: All inputs will be in lower-case.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process：</code>
+For this question we are grouping the strings with the same letter set. First, we need to find a common key to represent the common letter set. The best key will be the set itself, which is just any of the anagrams with the letters sorted.
+We store the set to a Map, key: the sorted letters of any anagram in that set. Value: an array of string contain anagram in that set.
+This way we only need to scan the input array once O(n), to put all the anagrams into the map and the answer is all the values in map grouped.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">groupAnagrams</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">strs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">hashMap</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">strs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">string</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">strs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">string</span> <span class="n">curr_sorted</span> <span class="o">=</span> <span class="n">curr</span><span class="p">;</span>
+            <span class="n">sort</span><span class="p">(</span><span class="n">curr_sorted</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">curr_sorted</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">hashMap</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">curr_sorted</span><span class="p">)</span> <span class="o">==</span> <span class="n">hashMap</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
+                <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="n">curr</span><span class="p">};</span>
+                <span class="n">hashMap</span><span class="p">[</span><span class="n">curr_sorted</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">hashMap</span><span class="p">[</span><span class="n">curr_sorted</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">curr</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">result</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;::</span><span class="n">iterator</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">hashMap</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">iter</span> <span class="o">!=</span> <span class="n">hashMap</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">iter</span><span class="p">){</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">iter</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="227-basic-calculator">227. Basic Calculator</h4>
+<blockquote>
+  <p>Implement a basic calculator to evaluate a simple expression string.<br />
+The expression string contains only non-negative integers, +, -, * , / operators and empty spaces . The integer division should truncate toward zero.<br />
+You may assume that the given expression is always valid.<br />
+Some examples:<br />
+“3+2*2” = 7<br />
+“ 3/2 “ = 1<br />
+“ 3+5 / 2 “ = 5<br />
+Note: Do not use the eval built-in library function.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code>
+For this question, the order of the operations matters. We need to store numbers with ‘+’, and ‘-‘ signs into a stack and deal with them after ‘* ‘ and ‘/’. If the sign is ‘+’, push it onto the stack, if ‘-‘, push it onto stack with negative sign. If we have ‘* ‘, or ‘/’, we calculate that number with the number on the top of the stack and push the result onto the stack. At last, we get the solution by adding up all the number in the stack.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">calculate</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">nums</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">sign</span> <span class="o">=</span> <span class="sc">'+'</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="sc">'0'</span><span class="p">){</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">'0'</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="sc">'0'</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">' '</span> <span class="o">||</span> <span class="n">i</span> <span class="o">==</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">sign</span> <span class="o">==</span> <span class="sc">'+'</span><span class="p">)</span> <span class="n">nums</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sign</span> <span class="o">==</span> <span class="sc">'-'</span><span class="p">)</span> <span class="n">nums</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="o">-</span><span class="n">d</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sign</span> <span class="o">==</span> <span class="sc">'*'</span> <span class="o">||</span> <span class="n">sign</span> <span class="o">==</span> <span class="sc">'/'</span><span class="p">){</span>
+                    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">sign</span> <span class="o">==</span> <span class="sc">'*'</span> <span class="o">?</span> <span class="n">nums</span><span class="p">.</span><span class="n">top</span><span class="p">()</span> <span class="o">*</span> <span class="n">d</span> <span class="o">:</span> <span class="n">nums</span><span class="p">.</span><span class="n">top</span><span class="p">()</span> <span class="o">/</span> <span class="n">d</span><span class="p">;</span>
+                    <span class="n">nums</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+                    <span class="n">nums</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="n">sign</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">nums</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+            <span class="n">nums</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="5-longest-palindromic-substring">5. Longest Palindromic Substring</h4>
+<blockquote>
+  <p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.<br />
+Example:<br />
+Input: “babad”<br />
+Output: “bab”<br />
+Note: “aba” is also a valid answer.
+Example:<br />
+Input: “cbbd”<br />
+Output: “bb”</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code></p>
+<p>This article is for intermediate readers. It introduces the following ideas:
+Palindrome, Dynamic Programming and String Manipulation. Make sure you understand what a palindrome means. A palindrome is a string which reads the same in both directions. For example, <script type="math/tex; mode=display">\textrm{''aba''}</script> is a palindome, <script type="math/tex; mode=display">\textrm{''abc''}</script> is not.</p>
+<hr />
+
+<p id="approach-1-longest-common-substring-accepted"><strong>Approach #1 (Longest Common Substring) [Accepted]</strong></p>
+<p><strong>Common mistake</strong></p>
+<p>Some people will be tempted to come up with a quick solution, which is unfortunately flawed (however can be corrected easily):</p>
+<blockquote>
+<p>Reverse <script type="math/tex; mode=display">S</script> and become <script type="math/tex; mode=display">S'</script>. Find the longest common substring between <script type="math/tex; mode=display">S</script> and <script type="math/tex; mode=display">S'</script>, which must also be the longest palindromic substring.</p>
+</blockquote>
+<p>This seemed to work, let’s see some examples below.</p>
+<p>For example, S = "caba", S' = "abac"</p>
+<p>The longest common substring between S and S' is "aba", which is the answer.</p>
+<p>Let’s try another example: S = "abacdfgdcaba", S' = "abacdgfdcaba"</p>
+<p>The longest common substring between S and S' is "abacd" Clearly, this is not a valid palindrome.</p>
+<p><strong>Algorithm</strong></p>
+<p>We could see that the longest common substring method fails when there exists a reversed copy of a non-palindromic substring in some other part of <script type="math/tex; mode=display">S</script>. To rectify this, each time we find a longest common substring candidate, we check if the substring’s indices are the same as the reversed substring’s original indices. If it is, then we attempt to update the longest palindrome found so far; if not, we skip this and find the next candidate.</p>
+<p>This gives us an <script type="math/tex; mode=display">O(n^2)</script> Dynamic Programming solution which uses <script type="math/tex; mode=display">O(n^2)</script> space (could be improved to use <script type="math/tex; mode=display">O(n)</script> space). Please read more about Longest Common Substring <a href="http://en.wikipedia.org/wiki/Longest_common_substring">here</a>.</p>
+<hr />
+
+<p id="approach-2-brute-force-time-limit-exceeded"><strong>Approach #2 (Brute Force) [Time Limit Exceeded]</strong></p>
+<p>The obvious brute force solution is to pick all possible starting and ending positions for a substring, and verify if it is a palindrome.</p>
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^3)</script>.
+Assume that <script type="math/tex; mode=display">n</script> is the length of the input string, there are a total of <script type="math/tex; mode=display">\binom{n}{2} = \frac{n(n-1)}{2}</script> such substrings (excluding the trivial solution where a character itself is a palindrome). Since verifying each substring takes <script type="math/tex; mode=display">O(n)</script> time, the run time complexity is <script type="math/tex; mode=display">O(n^3)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(1)</script>.</p>
+</li>
+</ul>
+<hr />
+
+<p id="approach-3-dynamic-programming-accepted"><strong>Approach #3 (Dynamic Programming) [Accepted]</strong></p>
+<p>To improve over the brute force solution, we first observe how we can avoid unnecessary re-computation while validating palindromes. Consider the case <script type="math/tex; mode=display">\textrm{''ababa''}</script>. If we already knew that <script type="math/tex; mode=display">\textrm{''bab''}</script> is a palindrome, it is obvious that <script type="math/tex; mode=display">\textrm{''ababa''}</script> must be a palindrome since the two left and right end letters are the same.</p>
+<p>We define <script type="math/tex; mode=display">P(i,j)</script> as following:</p>
+<p>
+<script type="math/tex; mode=display">
+P(i,j) =
+     \begin{cases}
+       \text{true,} &\quad\text{if the substring } S_i \dots S_j \text{ is a palindrome}\\
+       \text{false,} &\quad\text{otherwise.} \
+     \end{cases}
+</script>
+</p>
+<p>Therefore,</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, j) = ( P(i+1, j-1) \text{ and } S_i == S_j )
+</script>
+</p>
+<p>The base cases are:</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, i) = true
+</script>
+</p>
+<p>
+<script type="math/tex; mode=display">
+P(i, i+1) = ( S_i == S_{i+1} )
+</script>
+</p>
+<p>This yields a straight forward DP solution, which we first initialize the one and two letters palindromes, and work our way up finding all three letters palindromes, and so on...</p>
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+This gives us a runtime complexity of <script type="math/tex; mode=display">O(n^2)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+It uses <script type="math/tex; mode=display">O(n^2)</script> space to store the table.</p>
+</li>
+</ul>
+<p><strong>Additional Exercise</strong></p>
+<p>Could you improve the above space complexity further and how?</p>
+<hr />
+
+<p id="approach-4-expand-around-center-accepted"><strong>Approach #4 (Expand Around Center) [Accepted]</strong></p>
+<p>In fact, we could solve it in <script type="math/tex; mode=display">O(n^2)</script> time using only constant space.</p>
+<p>We observe that a palindrome mirrors around its center. Therefore, a palindrome can be expanded from its center, and there are only <script type="math/tex; mode=display">2n - 1</script> such centers.</p>
+<p>You might be asking why there are <script type="math/tex; mode=display">2n - 1</script> but not <script type="math/tex; mode=display">n</script> centers? The reason is the center of a palindrome can be in between two letters. Such palindromes have even number of letters (such as <script type="math/tex; mode=display">\textrm{''abba''}</script>) and its center are between the two <script type="math/tex; mode=display">\textrm{'b'}</script>s.</p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="n">String</span> <span class="nf">longestPalindrome</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">len1</span> <span class="o">=</span> <span class="n">expandAroundCenter</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">len2</span> <span class="o">=</span> <span class="n">expandAroundCenter</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">len1</span><span class="o">,</span> <span class="n">len2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="o">(</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">int</span> <span class="nf">expandAroundCenter</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">L</span> <span class="o">=</span> <span class="n">left</span><span class="o">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">L</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">L</span><span class="o">)</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">R</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">L</span><span class="o">--;</span>
+        <span class="n">R</span><span class="o">++;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">R</span> <span class="o">-</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>
+<p>Time complexity : <script type="math/tex; mode=display">O(n^2)</script>.
+Since expanding a palindrome around its center could take <script type="math/tex; mode=display">O(n)</script> time, the overall complexity is <script type="math/tex; mode=display">O(n^2)</script>.</p>
+</li>
+<li>
+<p>Space complexity : <script type="math/tex; mode=display">O(1)</script>.</p>
+</li>
+</ul>
+<p id="approach-5-manachers-algorithm-accepted"><strong>Approach #5 (Manacher's Algorithm) [Accepted]</strong></p>
+<p>There is even an <script type="math/tex; mode=display">O(n)</script> algorithm called Manacher's algorithm, explained <a href="http://articles.leetcode.com/longest-palindromic-substring-part-ii/">here in detail</a>. However, it is a non-trivial algorithm, and no one expects you to come up with this algorithm in a 45 minutes coding session. But, please go ahead and understand it, I promise it will be a lot of fun.</p>
+
+<p><a href="https://leetcode.com/articles/longest-palindromic-substring/">Original post can be find here.</a></p>
+
+<p><code class="highlighter-rouge">My Solution:</code></p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">longestPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()][</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">){</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]));</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">len</span><span class="p">){</span>
+                    <span class="n">len</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+                    <span class="n">right</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h4 id="3-longest-substring-without-repeating-characters">3. Longest Substring without Repeating Characters</h4>
+<blockquote>
+  <p>Given a string, find the length of the longest substring without repeating characters.<br />
+Examples:<br />
+Given “abcabcbb”, the answer is “abc”, which the length is 3.<br />
+Given “bbbbb”, the answer is “b”, with the length of 1.<br />
+Given “pwwkew”, the answer is “wke”, with the length of 3. Note that the answer must be a substring, “pwke” is a subsequence and not a substring.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">Thought Process:</code><br />
+<a href="https://leetcode.com/articles/longest-substring-without-repeating-characters">Multiple great approaches can be find here</a></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">lengthOfLongestSubstring</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">lookup</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">maxLen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">roundBegin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">lookup</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">lookup</span><span class="p">.</span><span class="n">end</span><span class="p">())){</span>
+                <span class="n">roundBegin</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">roundBegin</span><span class="p">,</span> <span class="n">lookup</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]);</span>
+            <span class="p">}</span>
+            <span class="n">lookup</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">maxLen</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">maxLen</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="n">roundBegin</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">maxLen</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 </code></pre>
