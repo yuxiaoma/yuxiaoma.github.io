@@ -305,3 +305,47 @@ public:
     }
 };
 ```
+
+>2017-06-27
+
+#### 17. Letter Combinations of a Phone Number
+>Given a digit string, return all possible letter combinations that the number could represent.  
+A mapping of digit to letters (just like on the telephone buttons) is given below.  
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+
+`Thought Process:`
+This questions if one of the finding all combinations. Recursion should be tried first for this kind of question.
+First we need to create a dictionary for the number pad. For each level of recursion on digits[i], we need to loop through all possible letters according to digits[i] one by one and perform recursion call in side the loop to add different letters to the current combo we working on, then finally append it to our final solution.  
+
+```cpp
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> all;
+        if (digits.size() == 0){
+            return all;
+        }
+        map<char, string> dict = {
+            {'0', " "}, {'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"}, {'8', "tuv"}, {'9', "wxyz"}
+        };
+        string one(digits.size(), '\0');
+        findCombinations(all, digits, one, 0, dict);
+        return all;
+    }
+
+    void findCombinations(vector<string> &all, string digits, string &one, int i, map<char, string> dict){
+        if (i == digits.size()){
+            all.push_back(one);
+            return;
+        }
+        string letters = dict[digits[i]];
+        for (int j = 0; j < letters.size(); j++) {
+            one[i] = letters[j];
+            findCombinations(all, digits, one, i+1, dict);
+        }
+    }
+};
+```
