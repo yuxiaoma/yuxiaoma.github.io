@@ -349,7 +349,8 @@ public:
 };
 ```
 
->2017-07-12
+>2017-07-12  
+
 #### 55. Jump Game
 
 >Given an array of non-negative integers, you are initially positioned at the first index of the array.  
