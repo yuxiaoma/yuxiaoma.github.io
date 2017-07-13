@@ -348,3 +348,80 @@ public:
     }
 };
 ```
+
+>2017-07-12
+#### 55. Jump Game
+
+>Given an array of non-negative integers, you are initially positioned at the first index of the array.  
+Each element in the array represents your maximum jump length at that position.  
+Determine if you are able to reach the last index.  
+For example:
+A = [2,3,1,1,4], return true.  
+A = [3,2,1,0,4], return false.
+
+`Thought Process:`  
+We can think of the array as a tree, every position in the array is node in the tree. If one position is able to jump to another position, there is a edge between the two nodes respect to the positions. We need to do Breath-First-Search to find out the "n-1" node is reachable.  
+However, the runtime to do the BFS is equal to the number of edges in the tree, which is O(mn), n refer to the range of number in the array, since it doesn't make sense to have m > n, we can write the runtime as O(n^2).  
+This is obviously not the best solution, we find that this tree does not contain cycle and we are doing the BFS in a sequential order 0,1,2...,n-1. We can optimize the solution into the following code.
+
+```cpp
+// 初始化标记数组
+for (int i = 1; i < n; i++) canJump[i] = false;
+canJump[0] = true;
+// 宽度优先搜索就是以0..n-1的顺序依次进队的
+for (int i = 0; i < n; i++) {
+    // 仅判断标记为进队的结点
+    if (!canJump[i]) continue;
+    // 依次枚举每条连出的边，将目标结点标记为进队（可抵达）
+    for (int j = 0; j < nums[i]; j++) {
+        canJump[i + j] = true;
+    }
+}
+```
+However, this optimization is only on the code side, the runtime is still O(n^2).
+After observation we find that any reachable position k is reached by a sequential positions {0,1,2,...,k}, k is the maximum reachable position so far. From that we can create a array of boolean to remember the reachable status, canJump. If the maximum reachable position is k, then canJump[0...k] = true, canJump[k+1...n] = false. So we actually only need to remember the position of k, there is no need to store every position as a boolean in the array.
+Following is the optimized code:
+
+```cpp
+// 初始化k
+int k = 0;
+for (int i = 0; i < n; i++) {
+    if (i > k) break;
+    // 依次枚举每条连出的边，更新k
+    for (int j = 0; j < nums[i]; j++) {
+        k = max(k, i + j);
+    }
+}
+```
+
+>Since k is the only the maximum, we can optimize this loop
+
+```cpp
+for (int j = 0; j < nums[i]; j++) {
+    k = max(k, i + j);
+}
+```
+>into this
+
+```cpp
+k = max(k, i + nums[i]);
+```
+
+There, we have a optimized O(n) runtime and space solution.
+
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        // 初始化k
+        int k = 0, n = nums.size();
+        // 本质上是宽度优先搜索
+        for (int i = 0; i < n && i <= k; i++) {
+            // 利用k表示当前所有队列中的元素（0 ... k）
+            k = max(k, i + nums[i]);
+        }
+        // 根据k判断答案
+        return k >= nums.size() - 1;
+    }
+};
+```
