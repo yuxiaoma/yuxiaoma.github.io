@@ -456,3 +456,74 @@ public:
     }
 };
 ```
+
+#### 152. Maximum Product Subarray
+
+>Find the contiguous subarray within an array (containing at least one number) which has the largest product.  
+For example, given the array [2,3,-2,4],
+the contiguous subarray [2,3] has the largest product = 6.
+
+`Thought Process:`  
+With multiplication, we have the property that -i * j = -ij, and -i * -j = ij, so we have to keep track of the two status of the current best product, the maximum and minimum. Also we need to compare the maximum and minimum with the current integer itself to find the maximum product we have so far.
+
+```cpp
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int maxProd = nums[0], curr_max = nums[0], curr_min = nums[0];
+        for (int i = 1; i < nums.size(); i++){
+            int temp = curr_max;
+            curr_max = max(nums[i], max(curr_max*nums[i], curr_min*nums[i]));
+            curr_min = min(nums[i], min(temp*nums[i], curr_min*nums[i]));
+            maxProd = max(maxProd, curr_max);
+        }
+        return maxProd;
+    }
+};
+```
+
+#### 56. Merge Intervals
+>Given a collection of intervals, merge all overlapping intervals.  
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+
+`Thought Process:`  
+We sort the range first then it is very easy to check if the intervals are overlapping. Runtime nlog(n) + n, O(nlog(n)).
+
+```cpp
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+    static bool compare(Interval a, Interval b){
+        return a.start < b.start || (a.start == b.start && a.end < b.end);
+    }
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+        int n = intervals.size();
+        vector<Interval> result;
+        if (n == 0) return result;
+        sort(intervals.begin(), intervals.end(), compare);
+
+        Interval prev = intervals[0];
+        for (int i = 1; i < n; i++){
+            if (prev.end >= intervals[i].start){
+                prev.end = max(prev.end, intervals[i].end);
+            }
+            else {
+                result.push_back(prev);
+                prev = intervals[i];
+            }
+        }
+        result.push_back(prev);
+        return result;
+    }
+};
+```
