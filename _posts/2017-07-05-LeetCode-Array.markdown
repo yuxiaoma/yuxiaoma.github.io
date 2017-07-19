@@ -584,3 +584,37 @@ public:
     }
 };
 ```
+
+#### 283. Move Zeros
+>Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.  
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].  
+Note:  
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+
+`Thought Process:`
+When we know that we need to solve the problem in-place, we know we need to switch the elements around with-in the array. A good idea is to get a chunk of zeros and keep track of the starting position and end position of the chunk, then just switch the number to the front of the zero-chunk if it is non-zero, and add it to the chunk if it is zero.
+
+```cpp
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int zeroBegin = 0, zeroEnd = 0;
+        if (nums.size() < 2){
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++){
+            if (nums[i] != 0){
+                int temp = nums[i];
+                nums[i] = 0;
+                nums[zeroBegin] = temp;
+                zeroBegin++;
+                zeroEnd = i;
+            }
+            else {
+                zeroEnd++;
+            }
+        }
+    }
+};
+```
