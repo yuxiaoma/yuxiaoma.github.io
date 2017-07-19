@@ -457,6 +457,8 @@ public:
 };
 ```
 
+>2017-07-13  
+
 #### 152. Maximum Product Subarray
 
 >Find the contiguous subarray within an array (containing at least one number) which has the largest product.  
@@ -524,6 +526,61 @@ public:
         }
         result.push_back(prev);
         return result;
+    }
+};
+```
+
+>2017-07-14  
+
+#### 88. Merge Sorted Array
+>Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.  
+Note:
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively.
+
+`Thought Process:`  
+Since we already know that nums1 have enough space to hold additional elements from nums2. We assume nums1 have m+n space. Most people will try to merge the arrays from the smallest to largest, but that way we will need to shift the array whenever we merge an element. If we merge the arrays from largest to smallest at the position nums1[m+n-1], no shifts needed.
+
+```cpp
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i = m-1, j = n-1;
+        int position = m+n-1;
+        while (j >= 0) {
+            if (nums1[i] > nums2[j] && i >= 0){
+                nums1[position] = nums1[i];
+                i--;
+            }
+            else {
+                nums1[position] = nums2[j];
+                j--;
+            }
+            position--;
+        }
+    }
+};
+```
+
+#### 268. Missing Number
+>Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.  
+For example,
+Given nums = [0, 1, 3] return 2.  
+Note:
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+`Thought Process:`
+This question is purely testing your math. Since we know "n" we can calculate the sum of 1+2+...+n = ((1+n)n)/2. Then we can find the missing number by using the sum we got from the equation subtract the sum of all integers in the array.
+
+```cpp
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int totalSum = ((1+n) * n)/2;
+        for (int i = 0; i < n; i++){
+            totalSum -= nums[i];
+        }
+        return totalSum;
     }
 };
 ```
