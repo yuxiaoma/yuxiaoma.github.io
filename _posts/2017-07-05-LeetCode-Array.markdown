@@ -618,3 +618,204 @@ public:
     }
 };
 ```
+
+>2017-07-19  
+
+#### 118. Pascal's Triangle
+>Given numRows, generate the first numRows of Pascal's triangle.  
+For example, given numRows = 5,
+Return  
+[  
+     [1],  
+    [1,1],  
+   [1,2,1],  
+  [1,3,3,1],  
+ [1,4,6,4,1]  
+]
+
+`Thought Process:`  
+This question we can just imitate how we build the triangle using hand. In every level, 1 at the beginning and end, curr[i] = prev[i-1] * prev[i].
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> result;
+        if (numRows >= 1) {
+            vector<int> one = {1};
+            result.push_back(one);
+        }
+        if (numRows >= 2) {
+            vector<int> one = {1,1};
+            result.push_back(one);
+        }
+        if (numRows >= 3) {
+            for (int rows = 3; rows <= numRows; rows++){
+                vector<int> prev = result[rows-2];
+                vector<int> one(rows);
+                one[0] = 1;
+                for (int i = 1; i < rows-1; i++){
+                    one[i] = prev[i-1] + prev[i];
+                }
+                one[rows-1] = 1;
+                result.push_back(one);
+            }
+        }
+        return result;
+    }
+};
+```
+
+#### 66. Plus One
+>Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.  
+You may assume the integer do not contain any leading zero, except the number 0 itself.  
+The digits are stored such that the most significant digit is at the head of the list.
+
+`Thought Process:`  
+We can just imitate addition by hand, but pay special attention when the highest digit need carry-over to another higher digit. We need build another array to add in that extra digit.
+
+```cpp
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        vector<int> dummy(digits), result;
+        int n = digits.size()-1;
+        dummy[n] += 1;
+        int check = dummy[n];
+        while (n > 0 && dummy[n] >= 10) {
+            dummy[n-1]++;
+            dummy[n] %= 10;
+            check = dummy[n-1];
+            n--;
+        }
+        if (dummy[0] >= 10){
+            dummy[0] %= 10;
+            result.push_back(1);
+            for (int i = 0; i < dummy.size(); i++){
+                result.push_back(dummy[i]);
+            }
+            return result;
+        }
+        else {
+            return dummy;
+        }
+    }
+};
+```
+
+#### 238. Product of Array Except Self
+>Given an array of n integers where n > 1, nums, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].  
+Solve it without division and in O(n).  
+For example, given [1,2,3,4], return [24,12,8,6].  
+Follow up:  
+Could you solve it with constant space complexity? (Note: The output array does not count as extra space for the purpose of space complexity analysis.)
+
+`Thought Process:`  
+If we want the product of array except self at position i, we can get this product by simply multiply the product of all numbers at left of i (nums[0...i-1]) by all numbers at right of i (nums[i+1...n]).
+[Detailed explanation can be find here](http://www.cnblogs.com/grandyang/p/4650187.html)
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> fwd(n, 1), bwd(n, 1), res(n);
+        for (int i = 0; i < n - 1; ++i) {
+            fwd[i + 1] = fwd[i] * nums[i];
+        }
+        for (int i = n - 1; i > 0; --i) {
+            bwd[i - 1] = bwd[i] * nums[i];
+        }
+        for (int i = 0; i < n; ++i) {
+            res[i] = fwd[i] * bwd[i];
+        }
+        return res;
+    }
+};
+```
+
+>Space complexity optimized. Use the return array "res" as container of all left product and all right product.
+
+```cpp
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> res(nums.size(), 1);
+        for (int i = 1; i < res.size(); i++){
+          res[i] = res[i-1] * nums[i-1];
+        }
+        int right = 1;
+        for (int i = res.size()-1; i >= 0; i--){
+          res[i] = res[i] * right;
+          right = right * nums[i];
+        }
+        return res;
+    }
+};
+```
+
+#### 26. Remove Duplicates from Sorted Array
+>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.  
+Do not allocate extra space for another array, you must do this in place with constant memory.  
+For example,  
+Given input array nums = [1,1,2],  
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
+
+`Thought Process:`  
+We need a index i to traverse the array and another index j to store the end of non-duplicated array we build so far. We then keep adding distinct number to end of index j and increment j.
+
+```cpp
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int pre_length = nums.size();
+        if (pre_length < 2){
+            return pre_length;
+        }
+        int j = 0;
+        for (int i = 1; i < pre_length; i++){
+            if (nums[i] != nums[j]){
+                j++;
+                nums[j] = nums[i];
+            }
+        }
+        return j + 1;
+    }
+};
+```
+
+#### Rotate Array
+>Rotate an array of n elements to the right by k steps.  
+For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].  
+Note:  
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.  
+[show hint]  
+Hint:  
+Could you do it in-place with O(1) extra space?
+Related problem: Reverse Words in a String II
+
+`Thought Process:`  
+For this question, assume the original array is AB，to find BA, we need to use the property that BA = （A-1 B-1）-1 （-1 is the reverse of).
+
+```cpp
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        k = k%n;
+        reverse(nums, 0, n-k-1);
+        reverse(nums, n-k, n-1);
+        reverse(nums, 0, n-1);
+    }
+
+    void reverse(vector<int>& nums, int start, int end){
+        while (start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+};
+```
