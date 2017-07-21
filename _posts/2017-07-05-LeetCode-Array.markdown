@@ -862,3 +862,209 @@ public:
     }
 };
 ```
+
+#### 34. Search for a Range
+>Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.  
+Your algorithm's runtime complexity must be in the order of O(log n).  
+If the target is not found in the array, return [-1, -1].  
+For example,  
+Given [5, 7, 7, 8, 8, 10] and target value 8,  
+return [3, 4].
+
+`Thought Process:`  
+When we see the runtime should be O(log n), we should immediately know we should use binary search for this question. However, since we are searching a range, we need to do the binary search differently. We need to search the left and right boundaries for range we are searching. Remember to carefully deal with special cases.
+
+```cpp
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.size() == 0) return {-1,-1};
+        int start, end, l, r, mid;
+        l = 0, r = nums.size()-1;
+        // Searching the right-most point of target range
+        while (l+1 < r){
+            mid = (l+r)/2;
+            if (nums[mid] <= target){
+                l = mid;
+            }
+            else {
+                r = mid;
+            }
+        }
+        end = l;
+        // Dealing with special cases
+        if (end < nums.size()-1 && nums[end+1] == target) end++;
+        if (nums[end] != target) end =-1;
+
+        l = 0, r = nums.size()-1;
+        // Searching the left-most point of target range
+        while (l+1 < r){
+            mid = (l+r)/2;
+            if (nums[mid] < target){
+                l = mid;
+            }
+            else {
+                r = mid;
+            }
+        }
+        start = r;
+        // Dealing with special cases
+        if (start > 0 && nums[start-1] == target) start--;
+        if (nums[start] != target) start =-1;
+
+        return {start, end};
+
+    }
+};
+```
+
+#### 33. Search in Rotated Sorted Array
+>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.  
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).  
+You are given a target value to search. If found in the array return its index, otherwise return -1.  
+You may assume no duplicate exists in the array.
+
+`Thought Process:`  
+[Detailed explanation can be find here](https://www.tianmaying.com/tutorial/LC33)
+
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        // 初始问题，寻找[0, size -1]中的最小值
+        int l = 0, r = nums.size() - 1;
+        // 不断重复来缩小问题规模
+        while (l < r) {
+            // 取中点，分情况讨论
+            int m = (l + r) / 2;
+            // 情况1
+            if (nums[l] < nums[r]) {
+                r = l;
+            }
+            else {
+                // 情况2.1
+                if (nums[m] >= nums[l]) {
+                    l = m + 1;
+                }
+                // 情况2.2
+                else {
+                    r = m;
+                }
+            }
+        }
+        // 将数组复位
+        int j = l;
+        vector<int> ordered;
+        for (int i = 0; i < nums.size(); i++) ordered.push_back(nums[(l + i) % nums.size()]);
+        // 二分查找target，记得还原为原本的坐标
+        l = 0, r = nums.size() - 1;
+        while (l < r) {
+            int m = (l + r) / 2;
+            if (ordered[m] == target) return (m + j) % nums.size();;
+            if (ordered[m] > target) r = m - 1;
+            if (ordered[m] < target) l = m + 1;
+        }
+        // 判断答案
+        if (l == r && ordered[l] == target) return (l + j) % nums.size();
+        return -1;
+    }
+};
+```
+
+#### 73. Set Matrix Zeros
+>Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.  
+click to show follow up.  
+Follow up:  
+Did you use extra space?
+A straight forward solution using O(mn) space is probably a bad idea.
+A simple improvement uses O(m + n) space, but still not the best solution.
+Could you devise a constant space solution?
+
+`Thought Process:`  
+This is a easy question if there is no space complexity requirements. We can just using another m*n matrix to remember all the places that have zeros, and set zeros according to that. A improved version will be using a m+n array to remember rows and columns need be set. A most optimized version will be using the first row and column from the given array to remember which rows and columns need to be set. Pay attention to matrix[0][0], since both first row and columns uses it as indicator, so we need to uses another two flags to remember the status of first row and column.
+
+```cpp
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = 0;
+        if (m > 0) n = matrix[0].size();
+        bool setFirstRow = false;
+        bool setFirstCol = false;
+        // Scan matrix and mark row and col need to be set inside first row and col
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (matrix[i][j] == 0){
+                    if (i == 0) setFirstRow = true;
+                    if (j == 0) setFirstCol = true;
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        // Set rows according to row mark
+        for (int i = 1; i < m; i++){
+            if (matrix[i][0] == 0){
+                for (int j = 0; j < n; j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        // Set cols according to col mark
+        for (int j = 1; j < n; j++){
+            if (matrix[0][j] == 0){
+                for (int i = 0; i < m; i++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        // Set first row if needed
+        if (setFirstRow == true){
+            for (int j = 0; j < n; j++){
+                matrix[0][j] = 0;
+            }
+        }
+        // Set first col if needed
+        if (setFirstCol == true){
+            for (int i = 0; i < m; i++){
+                matrix[i][0] = 0;
+            }
+        }
+    }
+};
+```
+
+#### 75. Sort Colors
+>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.  
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.  
+Note:  
+You are not suppose to use the library's sort function for this problem.  
+
+`Thought Process:`  
+A rather straight forward solution is a two-pass algorithm using counting sort.
+First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's. However, we can do better than this, we can solve it with an one-pass algorithm using only constant space.  
+If we can only traverse the array once, that mean we need to somehow swap all the numbers into the right place while we are traversing the array. The idea is when we traverse the array, if `nums[i] == 0` we swap it to the front of the array, if `nums[i] == 2`, we swap it to the end of array. But if we actually move it to number to the front or back, it is very expensive. We can improve this by using two pointers that indicate the right bound of 0s and left bound of 2s. This way we can just swap numbers into the bounds, and what's left in middle is 1s.
+
+```cpp
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        // Use two pointers to store the bound of 0s, and 2s
+        int bound0 = 0, bound2 = n-1;
+        // Scan the array, we don't need to scan beyond bound2
+        for (int i = 0; i <= bound2; i++){
+            // Scan for 2 first, because a 2 may swap a 0 at the back, but a 0 cannot swap a 2 at the front
+            while (nums[i] == 2 && i < bound2){
+                swap(nums[i], nums[bound2]);
+                bound2--;
+            }
+            while (nums[i] == 0 && bound0 < i){
+                swap(nums[i], nums[bound0]);
+                bound0++;
+            }
+        }
+    }
+};
+```
