@@ -819,3 +819,46 @@ public:
     }
 };
 ```
+
+>2017-07-20
+
+#### 48. Rotate Image
+>You are given an n x n 2D matrix representing an image.  
+Rotate the image by 90 degrees (clockwise).  
+Follow up:  
+Could you do this in-place?
+
+`Thought Process:`  
+After analysis the image before and after rotate, I found a pattern that we can rotate the image by reverse all rows in image then swap elements diagonally respect to the right corner.
+
+```cpp
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for (int i = 0; i < n; i++){
+            reverse(matrix[i], 0, n-1);
+        }
+        int row = 0, col = n-1;
+        while(row < n && col > 0){
+            for (int i = row+1, j = col-1; j >= 0; i++, j--){
+                int temp = matrix[row][j];
+                matrix[row][j] = matrix[i][col];
+                matrix[i][col] = temp;
+            }
+            row++;
+            col--;
+        }
+    }
+
+    void reverse(vector<int>& nums, int start, int end){
+        while (start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+};
+```
