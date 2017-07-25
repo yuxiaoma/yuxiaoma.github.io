@@ -141,6 +141,43 @@ public:
 };
 ```
 
+#### 105. Construct Binary Tree from Preorder and Inorder Traversal
+>Given preorder and inorder traversal of a tree, construct the binary tree.  
+Note:  
+You may assume that duplicates do not exist in the tree.
+
+`Thought Process:`  
+Since the preorder and inorder traversal of the tree is given, we notice that preorder[0] is the root of the tree, and we can also find the root in inorder, say at position k, preorder[0] = inorder[k]. Then we notice that inorder[0...k-1] is the left tree and inorder[k+1...n] is the right tree, we also can find left tree in preorder is preorder[1...k], and right tree is preorder[k+1...n]. We can have four pointers to keep track of the start and end of the preorder and inorder tree we are processing, then shift them around in the recursion to build the tree. A good optimization is to using a map to store the inorder traversal array so we can find the root's position in O(1).
+
+```cpp
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if (preorder.empty() || inorder.empty()){
+            return NULL;
+        }
+        map<int, int> lookup;
+        for (int i = 0; i < inorder.size(); i++){
+            lookup[inorder[i]] = i;
+        }
+        return build(preorder, inorder, lookup, 0, preorder.size()-1, 0, inorder.size()-1);
+    }
+
+    TreeNode* build(vector<int>& preorder, vector<int>& inorder, map<int,int>& lookup, int preL, int preR, int inL, int inR){
+        if (preL > preR || inL > inR){
+            return NULL;
+        }
+        else {
+            TreeNode* root = new TreeNode(preorder[preL]);
+            int rootIndex = lookup[preorder[preL]];
+            root->left = build(preorder, inorder, lookup, preL+1, preL+rootIndex-inL, inL, rootIndex-1);
+            root->right = build(preorder, inorder, lookup, preL+rootIndex-inL+1, preR, rootIndex+1, inR);
+            return root;
+        }
+    }
+};
+```
+
 >2017-07-09
 
 #### 11. Container with the Most Water
