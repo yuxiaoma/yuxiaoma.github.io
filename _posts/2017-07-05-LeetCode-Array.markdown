@@ -1068,3 +1068,190 @@ public:
     }
 };
 ```
+
+>2017-07-22
+
+#### 54. Spiral Matrix
+>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.  
+For example,  
+Given the following matrix:  
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]  
+You should return [1,2,3,6,9,8,7,4,5].
+
+`Thought Process:`  
+If we want to traverse the 2D matrix in a spiral order, we need to set four boundaries, top, bottom, left, right. Then decrementing the boundaries to achieve spiral traverse. Check if we have returned all the elements in the matrix to end the loop.
+
+```cpp
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty()) return {};
+        vector<int> res;
+        int m = matrix.size(), n = matrix[0].size();
+        int left = 0, right = n-1, top = 0, bot = m-1;
+        int total = m*n;
+        // Calulate the total number of element we need to out push and count down
+        while (total > 0){
+            // Outputting the top row
+            for (int j = left; j <= right; j++){
+                res.push_back(matrix[top][j]);
+                total--;
+            }
+            top++;
+            // Outputting the right column
+            if (total > 0){
+                for (int i = top; i <= bot; i++){
+                    res.push_back(matrix[i][right]);
+                    total--;
+                }
+                right--;
+            }
+            // Outputting the bottom row
+            if (total > 0){
+                for (int j = right; j >= left; j--){
+                    res.push_back(matrix[bot][j]);
+                    total--;
+                }
+                bot--;
+            }
+            // Outputting the left column
+            if (total > 0){
+                for (int i = bot; i >= top; i--){
+                    res.push_back(matrix[i][left]);
+                    total--;
+                }
+                left++;
+            }
+        }
+        return res;
+    }
+};
+```
+
+#### 78. Subsets
+>Given a set of distinct integers, nums, return all possible subsets.  
+Note: The solution set must not contain duplicate subsets.  
+For example,  
+If nums = [1,2,3], a solution is:  
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+`Thought Process:`  
+There is two way of doing this question, the first one is bit shifting, but I think this solution is complicated. This simpler one would be recursively adding elements to the subsets to finish all the subsets.
+[Detailed explanation can be find here](http://blog.csdn.net/geekmanong/article/details/50574432)
+
+```cpp
+class Solution {
+public:
+   vector<vector<int>> subsets(vector<int>& nums) {
+       vector<vector<int>> ans(1, vector<int>());
+       for (int i = 0; i < nums.size(); i++){
+           int n = ans.size();
+           // the second for loop is to find all subset contain nums[i]
+           for (int j = 0; j < n; j++){
+               // re-adding the subsets we already have in answer
+               ans.push_back(ans[j]);
+               // adding nums[i]
+               ans.back().push_back(nums[i]);
+           }
+       }
+       return ans;
+   }
+};
+```
+
+#### 62. Unique Paths
+>A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).  
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).  
+How many possible unique paths are there?  
+Note: m and n will be at most 100.
+
+`Thought Process:`  
+We need to first construct a m*n matrix to be the grid. In each cell we will store the number of unique paths that for robot to get to that cell. How we get that number is by adding the left and top cell since the robot can only move either down or right. We initialize all the cells in the first row and column to be 1, since there is only 1 unique path to these cells. After we traverse through and get all the number in the cell, the number in the bottom-right corner of the grid is the number we want.
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> grid(m, vector<int>(n, 1));
+        for (int i = 1; i < m; i++){
+            for (int j = 1; j < n; j++){
+                grid[i][j] = grid[i][j-1] + grid[i-1][j];
+            }
+        }
+        return grid[m-1][n-1];
+    }
+};
+```
+
+#### 79. Word Search
+>Given a 2D board and a word, find if the word exists in the grid.  
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.  
+For example,
+Given board =  
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]  
+word = "ABCCED", -> returns true,  
+word = "SEE", -> returns true,  
+word = "ABCB", -> returns false.
+
+`Thought Process:`
+[Detailed explanation can be find here](https://www.tianmaying.com/tutorial/LC79)
+
+```cpp
+class Solution {
+public:
+  bool exist(vector<vector<char>>& board, string word) {
+    int n = board.size();
+    if (n == 0) return false;
+    int m = board[0].size();
+    if (m == 0) return false;
+    // A matrix keep track of used cells
+    vector<vector<bool>> used(n, vector<bool>(m, false));
+    // Check for the first letter match and dfs from that cell
+    for (int i = 0; i < n; i++){
+      for (int j = 0; j < m; j++){
+        if (backtracking(board, word, used, i, j, 0)) return true;
+      }
+    }
+    return false;
+  }
+  // array for directions
+  const int dx[4] = {0, 0, 1, -1};
+  const int dy[4] = {1, -1, 0, 0};
+  // 回溯方法
+  bool backtracking(vector<vector<char>>& board, string &word, vector<vector<bool>> &used, int i, int j, int l) {
+    // if matched length is equal to the word's length, we have matched all letters
+    if (l == word.length()) return true;
+    // check if the cell is valid
+    if (i < 0 || j < 0 || i == board.size() || j == board[0].size() || used[i][j]) return false;
+    // check if the cell is a match
+    if (word[l] != board[i][j]) return false;
+    // assume we use this cell
+    used[i][j] = true;
+    // continue to check cell around the matched cell
+    for (int k = 0; k < 4; k++) {
+      // 递归进入下一层
+      if (backtracking(board, word, used, i + dx[k], j + dy[k], l + 1)) return true;
+    }
+
+    used[i][j] = false;
+    return false;
+  }
+};
+```
