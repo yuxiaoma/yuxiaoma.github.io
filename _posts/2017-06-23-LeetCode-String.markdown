@@ -702,3 +702,40 @@ public:
     }
 };
 ```
+
+#### 242. Valid Anagrams
+>Given two strings s and t, write a function to determine if t is an anagram of s.  
+For example,  
+s = "anagram", t = "nagaram", return true.  
+s = "rat", t = "car", return false.    
+Note:  
+You may assume the string contains only lowercase alphabets.  
+Follow up:  
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
+
+`Thought Process:`  
+For this questions, we can either store characters we encountered in string s in a map or a array, increment the number if we countered a char multiple times. Finally check if exact chars are showed in the string t.
+
+```cpp
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int s_length = s.length();
+        int t_length = t.length();
+        if (s_length != t_length){
+            return false;
+        }
+        int countTable[26] = {0};
+        for (int i = 0; i < s_length; i++){
+            countTable[s[i]-'a']++;
+            countTable[t[i]-'a']--;
+        }
+        for (int i = 0; i < 26; i++){
+            if (countTable[i] != 0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
