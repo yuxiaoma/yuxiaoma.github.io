@@ -132,3 +132,76 @@ public:
     }
 };
 ```
+
+>2017-10-24
+
+#### 94. Binary Tree Inorder Traversal
+>Given a binary tree, return the inorder traversal of its nodes' values.  
+For example:  
+Given binary tree [1,null,2,3],  
+   1  
+    \  
+     2  
+    /  
+   3  
+return [1,3,2].  
+Note: Recursive solution is trivial, could you do it iteratively?
+
+`Thought Process:`
+For this question the recursive solution is trivial, which is recursively traverse to the very left leaf, push the node value to the result vector, then push the mid node value, then recurse on the right edge.
+
+The iterative solution is less trivial. We need to create a stack to keep track of the nodes traversed. We still traverse to the very left leaf, main while push node we have traversed to the stack. Once we reach very left of the tree, push the value to the result vector then get the node we pushed at the top of the stack which is the parent of the node that we just recored in the result vector. Now do the same process to the right node. Until our current node is NULL and there is no more node left in the stack (stack is empty), we know we have finished traverse the tree.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+  vector<int> inorderTraversal(TreeNode* root) {
+      vector<int> res;
+      if (root == NULL) return res;
+      iterative(root, res);
+      return res;
+  }
+
+  // Recursive solution
+  void recursive(TreeNode* tree, vector<int> &res) {
+      if(tree->left == NULL && tree->right == NULL){
+          res.push_back(tree->val);
+          return ;
+      }
+      if (tree->left != NULL){
+          recursive(tree->left, res);
+      }
+      res.push_back(tree->val);
+      if (tree->right != NULL){
+          recursive(tree->right, res);
+      }
+  }
+
+  // Iterative solution
+  void iterative(TreeNode* tree, vector<int> &res) {
+    stack<TreeNode*> stack;
+    TreeNode* cur = tree;
+    while(cur || !stack.empty()){
+      if (!cur){
+        cur = stack.top();
+        stack.pop();
+        res.push_back(cur->val);
+        cur = cur->right;
+      }
+      else {
+        stack.push(cur);
+        cur = cur->left;
+      }
+    }
+  }
+};
+```
