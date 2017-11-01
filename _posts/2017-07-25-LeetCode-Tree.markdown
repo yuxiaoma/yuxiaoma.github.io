@@ -252,3 +252,70 @@ public:
   }
 };
 ```
+
+#### 102. Binary Tree Level Order Traversal
+>Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).  
+For example:  
+Given binary tree [3,9,20,null,null,15,7],  
+    3  
+   / \  
+  9  20  
+    /  \  
+   15   7  
+return its level order traversal as:  
+[  
+  [3],  
+  [9,20],  
+  [15,7]  
+]  
+
+`Thought Process:`
+For this question, it's obvious to use iterative solution instead of recursive solution, because we need hold
+information during our traversal. We need to record the node at the same level and do it to all levels in
+the tree. The idea is to use a "queue" to store the nodes in the same level, and pop them once when push new nodes
+from the next level.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ using namespace std;
+
+ class Solution {
+ public:
+     vector<vector<int>> levelOrder(TreeNode* root) {
+         vector<vector<int>> result;
+         if (root == NULL) {
+           return result;
+         }
+
+         queue<TreeNode* > Q;
+         Q.push(root);
+
+         while(!Q.empty()) {
+           vector<int> level;
+           int qsize = Q.size();
+
+           for (int i = 0; i < qsize; i++){
+             TreeNode* head = Q.front();
+             level.push_back(head->val);
+             Q.pop();
+             if (head->left != NULL) {
+               Q.push(head->left);
+             }
+             if (head->right != NULL) {
+               Q.push(head->right);
+             }
+           }
+           result.push_back(level);
+         }
+         return result;
+     }
+ };
+```
