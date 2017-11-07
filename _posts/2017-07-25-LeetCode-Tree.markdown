@@ -253,6 +253,8 @@ public:
 };
 ```
 
+>2017-10-26
+
 #### 102. Binary Tree Level Order Traversal
 >Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).  
 For example:  
@@ -316,6 +318,69 @@ from the next level.
            result.push_back(level);
          }
          return result;
+     }
+ };
+```
+
+>2017-10-27
+
+#### 116. Populating Next Right Pointers in Each Node
+>Given a binary tree  
+    struct TreeLinkNode {  
+      TreeLinkNode*left;  
+      TreeLinkNode*right;  
+      TreeLinkNode*next;
+    }  
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.  
+Initially, all next pointers are set to NULL.  
+Note:  
+You may only use constant extra space.  
+You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).  
+For example,  
+Given the following perfect binary tree,  
+         1  
+       /  \  
+      2    3  
+     / \  / \  
+    4  5  6  7  
+After calling your function, the tree should look like:  
+         1 -> NULL  
+       /  \  
+      2 -> 3 -> NULL  
+     / \  / \  
+    4->5->6->7 -> NULL  
+
+`Thought Process:`
+The idea is to use three pointers, one to track the head of each level, one pointer traverse the level of the head, third pointer use the second pointer to do connecting operations for the next level.
+
+```cpp
+/**
+ * Definition for binary tree with next pointer.
+ * struct TreeLinkNode {
+ *  int val;
+ *  TreeLinkNode *left, *right, *next;
+ *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+ * };
+ */
+ class Solution {
+ public:
+     void connect(TreeLinkNode *root) {
+         if (!root) return ;
+         TreeLinkNode* head = root;
+         while (head){
+             TreeLinkNode* cur = head->left;
+             if (cur == NULL) break;
+             cur->next = head->right;
+             cur = head->right;
+             TreeLinkNode* row = head->next;
+             while (row) {
+                 cur->next = row->left;
+                 row->left->next = row->right;
+                 cur = row->right;
+                 row = row->next;
+             }
+             head = head->left;
+         }
      }
  };
 ```
