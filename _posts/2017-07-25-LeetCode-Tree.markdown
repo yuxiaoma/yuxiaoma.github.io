@@ -355,12 +355,12 @@ The idea is to use three pointers, one to track the head of each level, one poin
 
 ```cpp
 /**
- * Definition for binary tree with next pointer.
- * struct TreeLinkNode {
- *  int val;
- *  TreeLinkNode *left, *right, *next;
- *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
- * };
+ * Definition for binary tree with next pointer.  
+ * struct TreeLinkNode {  
+ *  int val;  
+ *  TreeLinkNode *left, *right, *next;  
+ *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}  
+ * };  
  */
  class Solution {
  public:
