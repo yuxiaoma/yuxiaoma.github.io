@@ -384,3 +384,45 @@ The idea is to use three pointers, one to track the head of each level, one poin
      }
  };
 ```
+
+>2017-11-12
+
+#### 285. Inorder Successor in BST
+>Given a binary search tree and a node in it, find the in-order successor of that node in the BST.  
+Note: If the given node has no in-order successor in the tree, return null.
+
+`Thought Process:`
+The goal here is the find the node that is on the right of the p node, so all we need to do is remember the nood traverse left,
+and we can use the BST property to traverse left if p->val is less than the current node, traverse right vise versa.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+  TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+    if (root == NULL || p == NULL) {
+      return NULL;
+    }
+    TreeNode* successor = NULL;
+    while (root){
+      if (p->val < root->val){
+        successor = root;
+        root = root->left;
+      }
+      else {
+        root = root->right;
+      }
+    }
+    return successor;
+  }
+}
+```
