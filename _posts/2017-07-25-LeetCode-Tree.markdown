@@ -426,3 +426,74 @@ public:
   }
 }
 ```
+
+>2017-11-14
+
+#### 103. Binary Tree Zigzag Level Order Traversal
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        if (root == NULL) return vector<vector<int>>();
+        vector<vector<int>> ans;
+        ans.push_back(vector<int>(1, root -> val));
+        // 记录上一层的结点情况
+        vector<TreeNode*> lastlevel;
+        lastlevel.push_back(root);
+        // 一个基本的按层遍历方法
+        int depth = 0;
+        while (lastlevel.size() > 0) {
+            vector<TreeNode*> newlevel;
+            for (int j = 0; j < lastlevel.size(); j ++) {
+                if (lastlevel[j] -> left != NULL) newlevel.push_back(lastlevel[j] -> left);
+                if (lastlevel[j] -> right != NULL) newlevel.push_back(lastlevel[j] -> right);
+            }
+            lastlevel = newlevel;
+            // 根据层数确定zigzag的方向，并构造该层的答案
+            vector<int> intlevel;
+            depth ++;
+            if (depth % 2 == 0) {
+                for (int j = 0; j < newlevel.size(); j ++) {
+                    intlevel.push_back(newlevel[j] -> val);
+                }
+            }
+            else {
+                for (int j = newlevel.size() - 1; j >= 0; j--) {
+                    intlevel.push_back(newlevel[j] -> val);
+                }
+            }
+            // 加入答案
+            if (intlevel.size() > 0) {
+                ans.push_back(intlevel);
+            }
+        }
+        return ans;
+    }
+};
+```
