@@ -515,8 +515,8 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ```
 `Thought Process:`
-Recursive solution is trivial to implement for this question. From the root, we recursively iterate left and right tree, there are three cases
-1. p and q is in different side of the tree, then root is the LCA
+Recursive solution is trivial to implement for this question. From any node, we recursively iterate left and right tree, there are three cases
+1. p and q is in different side of the tree, then node is the LCA
 2. p and q both in the left tree (right tree returns NULL when searching for p and q), then whatever is returned from the iteration on left Tree
 3. p and q both in the right tree (left tree returns NULL when searching for p and q), then whatever is returned from the iteration on right Tree
 
