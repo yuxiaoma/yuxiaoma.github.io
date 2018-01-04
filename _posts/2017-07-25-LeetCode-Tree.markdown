@@ -555,7 +555,7 @@ public:
 ```
 
 #### 98. Validate Binary Search Tree
-
+```
 Given a binary tree, determine if it is a valid binary search tree (BST).
 
 Assume a BST is defined as follows:
@@ -573,3 +573,31 @@ Example 2:
    / \
   2   3
 Binary tree [1,2,3], return false.
+```
+`Thought Process:`
+In order to check if the entire tree is a BST, we need to check if all the subtrees are BST.
+We can recursively do a Inorder traverse of the tree and check if the left node is always smaller than the root and if the right node is always greater than the root. We need to use a global variable "prev" to keep track of the previous to make comparison in the next recursive level.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    TreeNode* prev;
+public:
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+        if (!isValidBST(root->left)) return false;
+        if (prev != NULL && root->val <= prev->val) return false;
+        prev = root;
+        if (!isValidBST(root->right)) return false;
+        return true;
+    }
+};
+```
