@@ -430,10 +430,11 @@ public:
 >2017-11-14
 
 #### 103. Binary Tree Zigzag Level Order Traversal
-```
+
 Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
 
 For example:
+```
 Given binary tree [3,9,20,null,null,15,7],
     3
    / \
@@ -500,11 +501,11 @@ public:
 ```
 
 #### 236. Lowest Common Ancestor of a Binary Tree
-```
+
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
-
+```
         _______3______
        /              \
     ___5__          ___1__
@@ -512,8 +513,9 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
    6      _2       0       8
          /  \
          7   4
-For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ```
+For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+
 `Thought Process:`
 Recursive solution is trivial to implement for this question. From any node, we recursively iterate left and right tree, there are three cases
 1. p and q is in different side of the tree, then node is the LCA
@@ -555,7 +557,7 @@ public:
 ```
 
 #### 98. Validate Binary Search Tree
-```
+
 Given a binary tree, determine if it is a valid binary search tree (BST).
 
 Assume a BST is defined as follows:
@@ -563,6 +565,7 @@ Assume a BST is defined as follows:
 The left subtree of a node contains only nodes with keys less than the node's key.
 The right subtree of a node contains only nodes with keys greater than the node's key.
 Both the left and right subtrees must also be binary search trees.
+```
 Example 1:
     2
    / \
