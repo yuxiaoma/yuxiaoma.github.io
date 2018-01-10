@@ -601,3 +601,86 @@ public:
     }
 };
 ```
+
+#### 297. Serialize and Deserialize Binary Tree
+
+Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+For example, you may serialize the following tree
+```
+    1
+   / \
+  2   3
+     / \
+    4   5
+```
+as "[1,2,3,null,null,4,5]", just the same as how LeetCode OJ serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless.
+
+`Thought Process:`
+This is a open question, so you can use any technical that you feel comfortable, as long as the serialization and deserialization work accordingly.
+
+My approach:
+* Serialization:
+Create a output stream. For C++, we can use ostringstream since we are going to doing a lot of conversion between string and integers.
+Traverse the tree `preorder` using recursion. If we reach a leaf (when node is null), insert "#" into our output stream, if we reach a node with `val`, insert the `val`. Remember to insert a space `" "` after each insert, because iostringstream uses space to split the input when reading from the output stream.
+
+* Deserialization:
+We recursively read the string from the input stream that `serialize` feeds in. If the string is a `val`, we create a new `TreeNode` continue recursion to get the `left` and `right` tree, then return the `TreeNode` to the lower level of the recursion. If the string is a "#", then we return a `nullptr` to the lower level.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        ostringstream out;
+        serialize(root, out);
+        return out.str();
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        istringstream in(data);
+        return deserialize(in);
+    }
+
+private:
+    // Serialize helper
+    void serialize(TreeNode* root, ostringstream& out){
+        if (!root) {
+            out << "# ";
+            return ;
+        }
+        out << root->val << " ";
+        serialize(root->left, out);
+        serialize(root->right, out);
+    }
+
+    // Deserialize helper
+    TreeNode* deserialize(istringstream& in){
+        string val;
+        in >> val;
+        if (val == "#") return nullptr;
+        TreeNode* root = new TreeNode(stoi(val));
+        root->left = deserialize(in);
+        root->right = deserialize(in);
+        return root;
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec;
+// codec.deserialize(codec.serialize(root));
+```
