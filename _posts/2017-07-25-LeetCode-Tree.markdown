@@ -687,3 +687,56 @@ private:
 // Codec codec;
 // codec.deserialize(codec.serialize(root));
 ```
+
+#### 124. Binary Tree Maximum Path Sum
+
+Given a binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+
+For example:
+Given the below binary tree,
+```
+       1
+      / \
+     2   3
+```
+Return 6.
+
+`Thought Process:`
+For the maximum path, there are four cases to travel though the tree:
+1. Only go through the node itself.
+2. Go through the left maximum path and the node.
+3. Go through the right maximum path and the node.
+4. Go through the left maximum path, then the node, then the right maximum path.
+
+We can find the value by travel the tree recursively, check on all the cases above while updating the maximum path value. The trick is that we only use the path that is positive, negative path sum only makes the final sum smaller.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ class Solution {
+   int maxPath = INT_MIN;
+  public:
+    int maxPathSum(TreeNode* root) {
+      helper(root);
+      return maxPath;
+    }
+
+  private:
+    int helper(TreeNode* root) {
+      if (root == NULL) return 0;
+      int leftPathMax = max(0, helper(root->left));
+      int rightPathMax = max(0, helper(root->right));
+      maxPath = max(maxPath, root->val + leftPathMax + rightPathMax);
+      return root->val + max(leftPathMax, rightPathMax);
+    }
+ };
+```
