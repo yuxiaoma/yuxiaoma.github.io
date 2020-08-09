@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "到湾区三年后的一些零散思绪"
-subtitle:   "这里是Linked List类型题的锦集"
 date:       2020-08-08 12:00:00
 author:     "Yuxiao"
 header-img: "img/post-bg-miui6.jpg"
